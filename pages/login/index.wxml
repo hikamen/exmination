@@ -1,0 +1,13 @@
+<!--index.wxml-->
+<view class="page">
+    <form bindsubmit="formSubmit" >
+        <view class="section">
+            <input name="username" placeholder="用户名" focus="true"/>
+            <input name="password" placeholder="密码" password="true" />
+        </view>
+        <view class="btn-area">
+            <button formType="submit" type="primary">登录</button>
+            <button bindtap="goToRegistration" plain="true" size="mini" class="register">立即注册</button>
+        </view>
+    </form>
+</view>

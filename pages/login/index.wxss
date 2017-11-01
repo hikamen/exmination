@@ -1,0 +1,30 @@
+/**index.wxss**/
+
+.page {
+    padding: 200rpx 30rpx;
+}
+
+.section {
+    border: 1rpx solid #f1f1f1;
+    border-radius: 10rpx;
+}
+.section input {
+    padding: 20rpx 10rpx;
+    margin: 0 20rpx;
+}
+.section input:last-child {
+    border-top: 1rpx solid #f1f1f1;
+}
+.btn-area {
+    margin-top: 40rpx;
+}
+
+button {
+    margin-top: 20rpx;
+}
+
+button.register {
+    float: right;
+    border: 0;
+}
+
