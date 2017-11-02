@@ -1,7 +1,7 @@
 /**index.wxss**/
 
 .page {
-    padding: 200rpx 30rpx;
+    padding: 200rpx 20rpx;
 }
 
 .section {

@@ -1,16 +1,39 @@
 {
   "pages": [
+    "pages/exam/index",
     "pages/login/index",
-    "pages/home/index",
+    "pages/myexam/index",
     "pages/index/index",
     "pages/logs/logs"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "鑫考试",
+    "navigationBarBackgroundColor": "#fafafa",
     "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "鑫考试",
+    "backgroundColor": "#f6f6f6",
+    "backgroundTextStyle": "light",
     "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "backgroundColor": "#fafafa",
+    "borderStyle": "black",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/exam/index",
+        "text": "考试列表",
+        "iconPath": "icon/list.png",
+        "selectedIconPath": "icon/list-selected.png"
+      },
+      {
+        "pagePath": "pages/myexam/index",
+        "text": "我的考试",
+        "iconPath": "icon/mylsit.png",
+        "selectedIconPath": "icon/mylsit-selected.png"
+      }
+    ]
   },
   "networkTimeout": {
     "request": 30000,

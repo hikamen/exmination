@@ -1,0 +1,15 @@
+<!--index.wxml-->
+<view class="page">
+    <view wx:for="{{examList}}" wx:key="id" class="item" hover-class="item-hover">
+        <view class="upper">
+            <text class="title">{{item.title}}</text>
+        </view>
+        <view class="lower">
+            <text>{{item.enrollDatetime}}</text>
+            <!--<text class="status">已通过</text>-->
+        </view>
+    </view>
+    <view class="item-bottom">
+        <text >{{noDataLabel}}</text>
+    </view>
+</view>

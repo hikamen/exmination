@@ -1,4 +1,3 @@
-
 const formatTime = date => {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
@@ -15,6 +14,14 @@ const formatNumber = n => {
     return n[1] ? n : '0' + n
 }
 
+function formatDatetime(value) {
+    value = trim(value);
+    if(value != '') {
+        value = value.substring(0, 16);
+    }
+    return value;
+}
+
 function trim(s) {
     if (s) {
         return s.replace(/(^\s*)|(\s*$)/g, "");
@@ -26,10 +33,10 @@ function trim(s) {
 function showAlert(content, callback) {
     wx.showModal({
         title: '提示',
-        content: content+'',
+        content: content,
         showCancel: false,
         success: () => {
-            if (typeof callback == 'function') {
+            if (typeof callback === 'function') {
                 callback();
             }
         }
@@ -39,14 +46,22 @@ function showAlert(content, callback) {
 function showConfirm(content, yesCallback, noCallback) {
     wx.showModal({
         title: '确认',
-        content: content+'',
+        content: content,
         success: res => {
-            if(res.confirm && typeof yesCallback == 'function') {
+            if (res.confirm && typeof yesCallback === 'function') {
                 yesCallback();
-            } else if(typeof  noCallback == 'function') {
+            } else if (typeof  noCallback === 'function') {
                 noCallback();
             }
         },
+    });
+}
+
+function showLoading(title) {
+    title = title || '加载中...';
+    wx.showLoading({
+        title: title,
+        mask: true
     });
 }
 
@@ -59,8 +74,10 @@ function redirectTo(url, success) {
 
 module.exports = {
     formatTime: formatTime,
+    formatDatetime: formatDatetime,
     showAlert: showAlert,
     showConfirm: showConfirm,
+    showLoading: showLoading,
     trim: trim,
     redirectTo: redirectTo
 }

@@ -1,12 +1,17 @@
-let util = require('util');
+const util = require('util');
+const constants = require('constants');
+
+const SERVER_NAME = 'http://192.168.31.88:8780/sunlearning';
 
 const CODE_SUCCESS = 1;
 const CODE_ERROR = 0;
 const CODE_TOKEN_EXPIRE = -1;
 
+let token = '';
+
 function doAfterRequestSuccess(res, callback, errCallback) {
     // console.log('success', res);
-    if (res.statusCode == 200) {
+    if (res.statusCode === 200) {
         let apiResponse = res.data;
         console.log(apiResponse);
         switch (apiResponse.code) {
@@ -17,6 +22,11 @@ function doAfterRequestSuccess(res, callback, errCallback) {
             }
             case CODE_TOKEN_EXPIRE: {
                 utils.showAlert('会话已过期，需要重新登录', () => {
+                    token = '';
+                    wx.setStorage({
+                        key: constants.TOKEN,
+                        data: ""
+                    });
                     wx.redirectTo({
                         url: '/pages/login/index'
                     })
@@ -24,7 +34,7 @@ function doAfterRequestSuccess(res, callback, errCallback) {
                 break;
             }
             case CODE_SUCCESS: {
-                if (typeof callback == 'function') {
+                if (typeof callback === 'function') {
                     callback(apiResponse.data);
                 }
                 break;
@@ -40,42 +50,64 @@ function doAfterRequestFail(err, errCallback) {
     util.showAlert('请求遇到网络错误，请稍后重试', errCallback);
 }
 
-function get(url, data, callback, errCallback) {
+function get(url, params, callback, errCallback) {
+    _initToken();
+    util.showLoading();
     wx.request({
-        url: url,
-        data: data,
+        url: SERVER_NAME + url,
+        data: params,
         method: 'GET',
+        header: {
+            'X-AUTH-TOKEN': token
+        },
         success: res => {
+            wx.hideLoading();
             doAfterRequestSuccess(res, callback, errCallback);
         },
         fail: err => {
+            wx.hideLoading();
             doAfterRequestFail(err, errCallback);
         }
     });
 }
 
-function post(url, data, callback, errCallback) {
+function post(url, params, callback, errCallback) {
+    _initToken();
+    util.showLoading('处理中...');
     wx.request({
-        url: url,
-        data: data,
+        url: SERVER_NAME + url,
+        data: params,
         method: 'POST',
         header: {
+            'X-AUTH-TOKEN': token,
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         success: res => {
+            wx.hideLoading();
             doAfterRequestSuccess(res, callback, errCallback);
         },
         fail: err => {
+            wx.hideLoading();
             doAfterRequestFail(err, errCallback);
         }
     });
 }
 
-const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
+function _initToken() {
+    if (token == null || token == '') {
+        let value = wx.getStorageSync(constants.TOKEN);
+        if (value) {
+            token = 'bearer ' + value;
+        }
+        console.log('get token from storage', token);
+    }
+}
+
+
 module.exports = {
     get: get,
     post: post,
-    URL_LOGIN: SERVER_NAME + '/api/login',
-    URL_REGISTER: SERVER_NAME + '/api/register',
-
+    URL_LOGIN: '/api/login',
+    URL_REGISTER: '/api/register',
+    URL_EVALUATION_LIST: '/api/activity/evaluation-list'
 };

@@ -1,11 +1,12 @@
 //index.js
 const app = getApp();
-let util = require('../../utils/util');
-let http = require('../../utils/http')
+const util = require('../../utils/util');
+const http = require('../../utils/http');
+const constants = require('../../utils/constants');
 
 Page({
     data: {
-        focus: true,
+        focusName: true,
         errMsg: '',
         submitDisabled: false,
         submitLoading: false
@@ -14,15 +15,18 @@ Page({
         console.log('login');
     },
     formSubmit: function (event) {
-        if(this._validUsername(event.detail.value.username)
+        if (this._validUsername(event.detail.value.username)
             && this._validPassword(event.detail.value.password)) {
             this.setData({
                 submitDisabled: true,
                 submitLoading: true
             });
             http.post(http.URL_LOGIN, event.detail.value, data => {
-                util.redirectTo('/pages/home/index');
-            }, ()=> {
+                wx.setStorageSync(constants.TOKEN, data.token);
+                wx.reLaunch({
+                    url: '/pages/exam/index'
+                });
+            }, () => {
                 this.setData({
                     submitDisabled: false,
                     submitLoading: false
@@ -36,11 +40,21 @@ Page({
     },
 
     nameConfirm: function (event) {
-        this._validUsername(event.detail.value);
+        if(this._validUsername(event.detail.value)) {
+            this.setData({
+                focusName: false
+            });
+        }
     },
     nameBlur: function (event) {
         this._validUsername(event.detail.value);
     },
+    /*nameFocus: function () {
+        this.setData({
+            focusName: true,
+            focusPassword: false
+        });
+    },*/
     passwordConfirm: function (event) {
         this._validPassword(event.detail.value);
     },
@@ -48,31 +62,30 @@ Page({
         this._validPassword(event.detail.value);
     },
     _validPassword: function (value) {
-        let valid = false;
+        let valid = true;
         if (util.trim(value) === '') {
             this.setData({
                 errMsg: '密码不能为空'
             });
+            valid = false;
         } else {
             this.setData({
                 errMsg: ''
             });
-            valid = true;
         }
         return valid;
     },
     _validUsername: function (value) {
-        let valid = false;
+        let valid = true;
         if (util.trim(value) === '') {
             this.setData({
                 errMsg: '用户名不能为空'
             });
+            valid = false;
         } else {
             this.setData({
-                focus: false,
                 errMsg: ''
             });
-            valid = true;
         }
         return valid;
     }

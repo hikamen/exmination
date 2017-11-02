@@ -1,21 +1,21 @@
 <!--index.wxml-->
 <view class="page">
     <form bindsubmit="formSubmit">
+        <view class="msg" wx:if="{{errMsg != ''}}">
+            <icon type="warn"/>
+            <text>{{errMsg}}</text>
+        </view>
         <view class="section">
             <view>
                 <input id="username" name="username" placeholder="请输入用户名" maxlength="30"
-                       confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focus}}"
-                       bindblur="nameBlur"/>
+                       confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focusName}}"
+                       bindblur="nameBlur" bindfocus="nameFocus"/>
             </view>
             <view class="separator"></view>
             <view>
                 <input id="password" name="password" placeholder="请输入密码" password="true" maxlength="30"
-                       confirm-type="done" focus="{{!focus}}" bindconfirm="passwordConfirm" bindblur="passwordBlur"/>
+                       confirm-type="done" bindconfirm="passwordConfirm" bindblur="passwordBlur"/>
             </view>
-        </view>
-        <view class="msg" wx:if="{{errMsg != ''}}">
-            <icon type="warn"/>
-            <text>{{errMsg}}</text>
         </view>
         <view class="btn-area">
             <button formType="submit" type="primary" disabled="{{submitDisabled}}" loading="{{submitLoading}}">登录</button>
