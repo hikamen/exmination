@@ -1,12 +1,24 @@
 <!--index.wxml-->
 <view class="page">
-    <form bindsubmit="formSubmit" >
+    <form bindsubmit="formSubmit">
         <view class="section">
-            <input name="username" placeholder="用户名" focus="true"/>
-            <input name="password" placeholder="密码" password="true" />
+            <view>
+                <input id="username" name="username" placeholder="请输入用户名" maxlength="30"
+                       confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focus}}"
+                       bindblur="nameBlur"/>
+            </view>
+            <view class="separator"></view>
+            <view>
+                <input id="password" name="password" placeholder="请输入密码" password="true" maxlength="30"
+                       confirm-type="done" focus="{{!focus}}" bindconfirm="passwordConfirm" bindblur="passwordBlur"/>
+            </view>
+        </view>
+        <view class="msg" wx:if="{{errMsg != ''}}">
+            <icon type="warn"/>
+            <text>{{errMsg}}</text>
         </view>
         <view class="btn-area">
-            <button formType="submit" type="primary">登录</button>
+            <button formType="submit" type="primary" disabled="{{submitDisabled}}" loading="{{submitLoading}}">登录</button>
             <button bindtap="goToRegistration" plain="true" size="mini" class="register">立即注册</button>
         </view>
     </form>

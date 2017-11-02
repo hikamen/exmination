@@ -4,7 +4,7 @@ const CODE_SUCCESS = 1;
 const CODE_ERROR = 0;
 const CODE_TOKEN_EXPIRE = -1;
 
-function doAfterRequestSuccess(res, callback) {
+function doAfterRequestSuccess(res, callback, errCallback) {
     // console.log('success', res);
     if (res.statusCode == 200) {
         let apiResponse = res.data;
@@ -12,7 +12,7 @@ function doAfterRequestSuccess(res, callback) {
         switch (apiResponse.code) {
             case CODE_ERROR: {
                 let message = apiResponse.message || '服务器处理请求出现错误';
-                util.showAlert(message);
+                util.showAlert(message, errCallback);
                 break;
             }
             case CODE_TOKEN_EXPIRE: {
@@ -23,52 +23,55 @@ function doAfterRequestSuccess(res, callback) {
                 });
                 break;
             }
-            default: {
+            case CODE_SUCCESS: {
                 if (typeof callback == 'function') {
                     callback(apiResponse.data);
                 }
+                break;
             }
         }
     } else {
-        util.showAlert('请求遇到错误，状态码：' + res.statusCode);
+        util.showAlert('请求遇到错误，状态码：' + res.statusCode, errCallback);
     }
 }
 
-function doAfterRequestFail(err) {
+function doAfterRequestFail(err, errCallback) {
     console.log(err);
-    util.showAlert('请求遇到网络错误，请稍后重试');
+    util.showAlert('请求遇到网络错误，请稍后重试', errCallback);
 }
 
-function get(url, data, callback) {
+function get(url, data, callback, errCallback) {
     wx.request({
         url: url,
         data: data,
         method: 'GET',
         success: res => {
-            doAfterRequestSuccess(res, callback);
+            doAfterRequestSuccess(res, callback, errCallback);
         },
         fail: err => {
-            doAfterRequestFail(err);
+            doAfterRequestFail(err, errCallback);
         }
     });
 }
 
-function post(url, data, callback) {
+function post(url, data, callback, errCallback) {
     wx.request({
         url: url,
         data: data,
         method: 'POST',
-        header: 'application/x-www-form-urlencoded',
+        header: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
         success: res => {
-            doAfterRequestSuccess(res, callback);
+            doAfterRequestSuccess(res, callback, errCallback);
         },
         fail: err => {
-            doAfterRequestFail(err);
+            doAfterRequestFail(err, errCallback);
         }
     });
 }
 
-const SERVER_NAME = 'http://localhost:8780/sunlearning';
+const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
 module.exports = {
     get: get,
     post: post,

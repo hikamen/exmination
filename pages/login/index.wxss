@@ -12,8 +12,20 @@
     padding: 20rpx 10rpx;
     margin: 0 20rpx;
 }
-.section input:last-child {
+.section icon {
+    float: right;
+}
+.msg {
+    margin-top: 20rpx;
+    color: red;
+}
+.msg text {
+    position: relative;
+    top: -10rpx;
+}
+.separator {
     border-top: 1rpx solid #f1f1f1;
+    margin: 0 20rpx;
 }
 .btn-area {
     margin-top: 40rpx;
