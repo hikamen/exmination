@@ -21,14 +21,19 @@
     width: 80rpx;
     margin-right: 40rpx;
 }
+.mg-bottom {
+    margin-bottom: 200rpx;
+}
 .section text {
 }
 .footer {
     text-align: center;
     margin: 30rpx 0;
+    position: fixed;
+    bottom: 10rpx;
+    width: 95%;
 }
-.footer view {
-}
+
 .footer view.col {
     margin: 0 20rpx;
     display: inline-block;

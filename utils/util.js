@@ -30,6 +30,15 @@ function trim(s) {
     }
 }
 
+function showToast(title, success) {
+    wx.showToast({
+        title: title,
+        icon: 'success',
+        duration: 3000,
+        success: success
+    })
+}
+
 function showAlert(content, callback) {
     wx.showModal({
         title: '提示',
@@ -75,6 +84,7 @@ function redirectTo(url, success) {
 module.exports = {
     formatTime: formatTime,
     formatDatetime: formatDatetime,
+    showToast: showToast,
     showAlert: showAlert,
     showConfirm: showConfirm,
     showLoading: showLoading,

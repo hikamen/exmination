@@ -4,7 +4,7 @@ const app = getApp();
 const util = require('../../utils/util');
 const http = require('../../utils/http');
 const constants = require('../../utils/constants');
-const model = require('../../model/exam');
+const model = require('../../model/activity');
 
 Page({
     data: {
@@ -43,7 +43,7 @@ Page({
             if (data.numberOfElements > 0) {
                 let examList = this.data.examList;
                 for (let item of data.content) {
-                    let exam = new model.Exam(item.id, item.title, item.enrollStartDatetime, item.enrollEndDatetime);
+                    let exam = new model.Activity(item);
                     examList.push(exam);
                 }
                 let label = '';

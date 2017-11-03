@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/exam/index",
-    "pages/exam-my/index",
     "pages/exam-detail/index",
+    "pages/exam-my/index",
     "pages/login/index",
     "pages/index/index",
     "pages/logs/logs"
