@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="page">
-    <view wx:for="{{examList}}" wx:key="id" class="item" hover-class="item-hover">
+    <view wx:for="{{examList}}" wx:key="id" data-id="{{item.id}}" class="item" hover-class="item-hover"
+          bindtap="goToExamDetail">
         <view class="upper">
             <text class="title">{{item.title}}</text>
         </view>
@@ -10,6 +11,6 @@
         </view>
     </view>
     <view class="item-bottom">
-        <text >{{noDataLabel}}</text>
+        <text>{{noDataLabel}}</text>
     </view>
 </view>

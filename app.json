@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/exam/index",
+    "pages/exam-my/index",
+    "pages/exam-detail/index",
     "pages/login/index",
-    "pages/myexam/index",
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -28,7 +29,7 @@
         "selectedIconPath": "icon/list-selected.png"
       },
       {
-        "pagePath": "pages/myexam/index",
+        "pagePath": "pages/exam-my/index",
         "text": "我的考试",
         "iconPath": "icon/mylsit.png",
         "selectedIconPath": "icon/mylsit-selected.png"

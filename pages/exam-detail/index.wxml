@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view class="page">
+    <view class="section">
+        <text class="title">考试A考试A考试A考试A考试A</text>
+    </view>
+    <view class="section">
+        <view> <label>考试次数</label><text>剩余3次</text> </view>
+        <view> <label>考试时长</label><text>剩余3次</text> </view>
+        <view> <label>卷面总分</label><text>剩余3次</text> </view>
+        <view> <label>合格分数</label><text>剩余3次</text> </view>
+        <view> <label>开始时间</label><text>剩余3次</text> </view>
+        <view> <label>结束时间</label><text>剩余3次</text> </view>
+    </view>
+    <view class="section">
+        <view>
+            <text class="title">目标</text>
+        </view>
+        <view>
+            目标目标目标目标目标目标目标目标目标目标目标目标目标目标目标目标目标目标目标
+        </view>
+    </view>
+    <view class="section">
+        <view>
+            <text class="title">简介</text>
+        </view>
+        <view>
+            简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+        </view>
+    </view>
+    <view class="footer" >
+        <view wx:if="{{showEnrollBtn}}">
+            <button type="primary" >立即报名</button>
+        </view>
+        <view wx:if="{{showExamBtn}}" class="{{showHistoryBtn && showExamBtn ? 'col': ''}}">
+            <button type="primary" >进入考试</button>
+        </view>
+        <view wx:if="{{showHistoryBtn}}" class="{{showHistoryBtn && showExamBtn ? 'col': ''}}">
+            <button type="primary" >查看历史</button>
+        </view>
+    </view>
+</view>
