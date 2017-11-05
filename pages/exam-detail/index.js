@@ -27,6 +27,9 @@ Page({
     },
     onPullDownRefresh: function () {
         this.getRemoteData();
+        setTimeout(() => {
+            wx.stopPullDownRefresh();
+        }, constants.PULL_DOWN_STOP_TIME);
     },
 
     /**
@@ -58,7 +61,9 @@ Page({
      * 进入考试
      */
     enterExam: function() {
-
+        let url = '/pages/paper/index?activityId='+this.data.id + '&resourceId='+this.data.resource.id
+            + '&activityEnrollmentId='+this.data.enrollment.id+'&mode='+constants.MODE_ANSWER;
+        util.navigateTo(url);
     },
     getRemoteData() {
         http.get(http.URL_EVALUATION_DETAIL, {activityId: this.data.id}, data => {

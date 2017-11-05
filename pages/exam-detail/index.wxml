@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="page" wx:if="{{activity!= null && activity.id !=''  && resource!=null && resource.id != ''}}">
+<view class="content" wx:if="{{activity!= null && activity.id !=''  && resource!=null && resource.id != ''}}">
     <view class="section">
         <text class="title">{{activity.title}}</text>
     </view>

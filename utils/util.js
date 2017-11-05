@@ -16,7 +16,7 @@ const formatNumber = n => {
 
 function formatDatetime(value) {
     value = trim(value);
-    if(value != '') {
+    if (value != '') {
         value = value.substring(0, 16);
     }
     return value;
@@ -81,6 +81,13 @@ function redirectTo(url, success) {
     })
 }
 
+function navigateTo(url, success) {
+    wx.navigateTo({
+        url: url,
+        success: success
+    });
+}
+
 module.exports = {
     formatTime: formatTime,
     formatDatetime: formatDatetime,
@@ -89,5 +96,6 @@ module.exports = {
     showConfirm: showConfirm,
     showLoading: showLoading,
     trim: trim,
-    redirectTo: redirectTo
+    redirectTo: redirectTo,
+    navigateTo: navigateTo
 }

@@ -19,9 +19,13 @@ Page({
     onPullDownRefresh: function () {
         this.setData({
             examList: [],
-            page: 1
+            page: 1,
+            noDataLabel: ''
         });
         this.getRemoteData();
+        setTimeout(() => {
+            wx.stopPullDownRefresh();
+        }, constants.PULL_DOWN_STOP_TIME);
     },
     onReachBottom: function () {
         this.setData({
@@ -30,9 +34,7 @@ Page({
         this.getRemoteData();
     },
     goToExamDetail: function (event) {
-        wx.navigateTo({
-            url: '/pages/exam-detail/index?id=' + event.currentTarget.dataset.id
-        });
+        util.navigateTo('/pages/exam-detail/index?id=' + event.currentTarget.dataset.id);
     },
     getRemoteData: function () {
         let params = {

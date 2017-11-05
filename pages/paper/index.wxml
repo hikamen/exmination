@@ -1,0 +1,77 @@
+<!--index.wxml-->
+<view class="header" wx:if="{{question != null}}">
+    <view class="section clock">
+        <text> 00:30:00 </text>
+    </view>
+    <view class="section" wx:if="{{question.sectionTitle}}">
+        <text>{{question.sectionTitle}}</text>
+    </view>
+    <view class="section title">
+        <text>{{question.content}}<text class="type">[{{question.typeLabel}} | {{question.score}}分]</text> </text>
+    </view>
+</view>
+<view class="content" wx:if="{{question != null}}">
+    <view class="section">
+        <radio-group wx:if="{{question.type == 'S'}}" class="radio-group" bindchange="radioChangeHandle">
+            <label class="option" wx:for="{{question.optionList}}" wx:key="id">
+                <radio value="{{item.id}}" disabled="{{disabled}}"
+                        checked="{{item.checked}}" />{{item.indexLabel}}. {{item.content}}
+            </label>
+        </radio-group>
+        <checkbox-group wx:elif="{{question.type == 'M' || question.type == 'C'}}" bindchange="checkboxChangeHandle">
+            <label class="option"  wx:for="{{question.optionList}}"  wx:key="id">
+                <checkbox value="{{item.id}}" disabled="{{disabled}}"
+                          checked="{{item.checked}}"/>{{item.indexLabel}}. {{item.content}}
+            </label>
+        </checkbox-group>
+        <radio-group wx:elif="{{question.type == 'T'}}" class="radio-group" bindchange="radioChangeHandle">
+            <label class="option">
+                <radio value="true" disabled="{{disabled}}"
+                       checked="{{questionRecord.answer == 'true' ? true: false}}"/>对
+            </label>
+            <label class="option">
+                <radio value="false" disabled="{{disabled}}"
+                       checked="{{questionRecord.answer == 'false' ? true: false}}"/>错
+            </label>
+        </radio-group>
+        <block wx:elif="{{question.type == 'F'}}">
+            <view  wx:for="{{question.optionList}}"  wx:key="id">
+                <label>第{{index+1}}个空格的答案：</label>
+                <input class="blank" maxlength="30" value="{{questionRecord.optionRecords[index].answer}}"
+                       disabled="{{disabled}}" data-index="{{index}}" bindinput="blankInputHandle"/>
+            </view>
+        </block>
+        <block wx:elif="{{question.type == 'A'}}">
+            <textarea maxlength="500" placeholder="请输入您的观点" disabled="{{disabled}}"
+                value="{{questionRecord.answer}}" bindinput="textareaHandle"></textarea>
+        </block>
+    </view>
+    <view class="answer" wx:if="{{show_answer}}">
+        <text>您的回答：{{questionRecord.correctStatusLabel}}</text>
+        <text>本题得分：{{questionRecord.scoreStatus == 2 ? (questionRecord.score+'分'): '待评分'}}</text>
+        <text wx:if="{{question.type == 'S' || question.type == 'M' || question.type =='C'}}">标准答案：{{question.answer}}</text>
+        <text wx:elif="{{question.type == 'T'}}">标准答案：{{question.answer == 'true' ? '对':'错'}}</text>
+        <block wx:elif="{{question.type == 'F'}}">
+            <text>标准答案：</text>
+            <text wx:for="{{question.optionList}}" wx:key="id">{{index+1}}. {{item.content}}</text>
+        </block>
+        <block wx:else>
+            <text>参数答案：</text>
+            <text>{{question.answer}}</text>
+        </block>
+    </view>
+</view>
+<view class="footer" wx:if="{{question != null}}">
+    <view wx:if="{{showSubmitBtn}}" class="submit-area">
+        <button bindtap="submitHandle" type="primary" >提交</button>
+    </view>
+   <view class="left">
+       <button plain="true" bindtap="goPrevious" disabled="{{previousBtnDisabled}}">上一题</button>
+   </view>
+    <view class="middle">
+        <text><text class="current">{{currentIndex+1}}</text>/{{total}}</text>
+    </view>
+    <view class="right">
+        <button plain="true" bindtap="goNext" disabled="{{nextBtnDisabled}}">下一题</button>
+    </view>
+</view>

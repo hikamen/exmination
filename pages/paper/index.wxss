@@ -1,0 +1,89 @@
+/**index.wxss**/
+.content {
+    padding-bottom: 200rpx;
+}
+.header text {
+    margin: 0 20rpx;
+}
+.clock {
+    text-align: center;
+    padding-top: 0;
+    padding-bottom: 10rpx;
+}
+
+.option {
+    display: block;
+    margin: 20rpx 0;
+}
+.blank, textarea{
+    border: 1px solid #bcbcbc;
+    border-radius: 5rpx;
+    height: 40rpx;
+    padding: 15rpx 10rpx;
+    margin: 10rpx 0;
+}
+textarea {
+    height: 200rpx;
+    width: 96%;
+}
+.correct {
+    color: #25dc38;
+}
+.wrong {
+    color: red;
+}
+.type {
+    font-size: 10pt;
+    color: #cdcdc9;
+    margin-left: 20rpx;
+}
+.answer {
+    font-size: 11pt;
+    display: flex;
+    flex-direction: column;
+}
+.answer>text {
+    margin-top: 20rpx;
+}
+.section label {
+    font-size: 11pt;
+}
+.title {
+    display: flex;
+}
+.footer>view {
+    display: inline-block;
+}
+
+.footer .submit-area {
+    display: block;
+}
+
+.footer button {
+    border: 0;
+    margin:0;
+    padding: 0;
+}
+
+.footer .left {
+    width: 34%;
+    text-align: left;
+}
+.footer .right {
+    width: 34%;
+    text-align: right;
+}
+
+.footer .middle {
+    position: relative;
+    top: -40rpx;
+    width: 28%;
+    border-left:  1px solid #f1f1f1;
+    border-right:  1px solid #f1f1f1;
+}
+
+.footer .middle .current {
+    color: #25dc38;
+}
+
+

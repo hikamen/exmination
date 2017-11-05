@@ -1,5 +1,29 @@
 /**app.wxss**/
 
-.page {
+.content {
     padding: 20rpx;
+}
+
+.footer{
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #f6f6f6;
+}
+
+.section {
+    font-size: 12pt;
+    color: #242725;
+    border-bottom: 1rpx solid #f1f1f1;
+    padding: 20rpx 0;
+}
+
+.title {
+    font-size: 14pt;
+    color: #1b1b1b;
+}
+
+.mg-bottom {
+    margin-bottom: 200rpx;
 }

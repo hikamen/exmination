@@ -1,6 +1,6 @@
 /**index.wxss**/
 
-.page {
+.content {
     padding: 200rpx 20rpx;
 }
 

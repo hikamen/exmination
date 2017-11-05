@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="page">
+<view class="content">
     <view wx:for="{{examList}}" wx:key="id" data-id="{{item.id}}" class="item" hover-class="item-hover"
           bindtap="goToExamDetail">
         <view class="upper">

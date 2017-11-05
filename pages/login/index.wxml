@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="page">
+<view class="content">
     <form bindsubmit="formSubmit">
         <view class="msg" wx:if="{{errMsg != ''}}">
             <icon type="warn"/>

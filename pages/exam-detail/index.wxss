@@ -1,17 +1,5 @@
 /**index.wxss**/
 
-
-.section {
-    font-size: 12pt;
-    color: #242725;
-    border-bottom: 1rpx solid #f1f1f1;
-    padding-bottom: 30rpx;
-}
-.title {
-    font-size: 16pt;
-    color: #1b1b1b;
-}
-
 .section>view {
     margin-top: 20rpx;
 }
@@ -21,21 +9,17 @@
     width: 80rpx;
     margin-right: 40rpx;
 }
-.mg-bottom {
-    margin-bottom: 200rpx;
-}
-.section text {
-}
+
 .footer {
-    text-align: center;
     margin: 30rpx 0;
-    position: fixed;
     bottom: 10rpx;
     width: 95%;
+    background: #ffffff;
 }
 
 .footer view.col {
     margin: 0 20rpx;
     display: inline-block;
 }
+
 

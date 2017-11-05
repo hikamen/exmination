@@ -1,7 +1,7 @@
 const util = require('util');
 const constants = require('constants');
 
-const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
+const SERVER_NAME = 'http://localhost:8780/sunlearning';
 
 const CODE_SUCCESS = 1;
 const CODE_ERROR = 0;
