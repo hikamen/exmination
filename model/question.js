@@ -180,6 +180,7 @@ class QuestionRecord {
 
     optionRecords = [];
     correctStatusLabel = '';
+    isAnswered = false;
 
     constructor(data) {
         if (data) {

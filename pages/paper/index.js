@@ -203,6 +203,7 @@ Page({
         } else {
             questionRecord.answer = event.detail.value;
         }
+        questionRecord.isAnswered = true;
     },
     /**
      * 处理多选题和不定项题输入
@@ -217,6 +218,9 @@ Page({
                 optionRecord.optionId = val;
                 questionRecord.optionRecords.push(optionRecord);
             }
+            questionRecord.isAnswered = true;
+        } else {
+            questionRecord.isAnswered = false;
         }
     },
     /**
@@ -234,6 +238,15 @@ Page({
         }
         let index = event.currentTarget.dataset.index;
         questionRecord.optionRecords[index].answer = event.detail.value;
+
+        let isAnswered = false;
+        for (let optRecord of questionRecord.optionRecords) {
+            if (util.trim(optRecord.answer) !== '') {
+                isAnswered = true;
+                break;
+            }
+        }
+        questionRecord.isAnswered = isAnswered;
     },
     /**
      * 处理问答题输入
@@ -242,25 +255,46 @@ Page({
     textareaHandle: function (event) {
         let questionRecord = this.data.questionRecords[this.data.currentIndex];
         questionRecord.answer = event.detail.value;
+        if (util.trim(questionRecord.answer) !== '') {
+            questionRecord.isAnswered = true;
+        }
     },
     submitHandle: function () {
-        let paperRecord = new que_model.PaperRecord();
-        paperRecord.activityEnrollmentId = this.data.activityEnrollmentId;
-        paperRecord.learningSessionId = this.data.learningSessionId;
-        paperRecord.resourceId = this.data.resourceId;
-        paperRecord.autoInd = false;
-        paperRecord.questionRecords = this.data.questionRecords;
-        let params = {
-            'data': JSON.stringify(paperRecord),
-            'activityId': this.data.activityId,
-            'activityEnrollmentId': this.data.activityEnrollmentId,
-            'learningToken': this.data.learningToken
-        };
-        http.post(http.URL_SUBMIT_PAPER + this.data.resourceId, params, data => {
-            util.showAlert('恭喜您已经成功提交试卷，请稍后查看评分', () => {
-                wx.navigateBack();
+        this._checkUserAnswer(() => {
+            let paperRecord = new que_model.PaperRecord();
+            paperRecord.activityEnrollmentId = this.data.activityEnrollmentId;
+            paperRecord.learningSessionId = this.data.learningSessionId;
+            paperRecord.resourceId = this.data.resourceId;
+            paperRecord.autoInd = false;
+            paperRecord.questionRecords = this.data.questionRecords;
+            let params = {
+                'data': JSON.stringify(paperRecord),
+                'activityId': this.data.activityId,
+                'activityEnrollmentId': this.data.activityEnrollmentId,
+                'learningToken': this.data.learningToken
+            };
+            http.post(http.URL_SUBMIT_PAPER + this.data.resourceId, params, data => {
+                util.showAlert('恭喜您已经成功提交试卷，请稍后查看评分', () => {
+                    wx.navigateBack();
+                });
             });
         });
+    },
+    _checkUserAnswer: function (callback) {
+        if (this.data.questionRecords.length > 0) {
+            let missing = [];
+            for (let record of this.data.questionRecords) {
+                if (!record.isAnswered) {
+                    missing.push(record.index + 1);
+                }
+            }
+            if (missing.length > 0) {
+                util.showConfirm('您还有' + missing.length + '道题目，包括(' + missing.join('、') + ')还没问答，确认提交吗？',
+                    callback);
+            } else {
+                util.showConfirm('您已经回答完所有题目，确认提交吗？', callback);
+            }
+        }
     },
     _setCurrentQuestion: function (i) {
         let question = this.data.questionList[i];
