@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="header" wx:if="{{question != null}}">
-    <view class="section clock">
-        <text> 00:30:00 </text>
+    <view class="section clock" wx:if="{{showTimer}}">
+        <text class="{{warningTime?'warning':''}}">{{remainingTime}}</text>
     </view>
     <view class="section" wx:if="{{question.sectionTitle}}">
         <text>{{question.sectionTitle}}</text>
@@ -63,7 +63,7 @@
 </view>
 <view class="footer" wx:if="{{question != null}}">
     <view wx:if="{{showSubmitBtn}}" class="submit-area">
-        <button bindtap="submitHandle" type="primary" >提交</button>
+        <button bindtap="submitHandle" type="primary" >提交试卷</button>
     </view>
    <view class="left">
        <button plain="true" bindtap="goPrevious" disabled="{{previousBtnDisabled}}">上一题</button>

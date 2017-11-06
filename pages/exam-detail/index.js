@@ -18,12 +18,19 @@ Page({
         resource: null,
         enrollment: null,
         resourceAttendance: null,
-        id: ''
+        id: '', //考试活动ID
+        first: true //是否第一次显示
     },
     onLoad: function (option) {
         this.data.id = option.id;
         // this.data.id = '375763170083614720';
         this.getRemoteData();
+    },
+    onShow: function () {
+        if (!this.data.first) {
+            wx.startPullDownRefresh();
+        }
+        this.data.first = false;
     },
     onPullDownRefresh: function () {
         this.getRemoteData();
@@ -37,7 +44,7 @@ Page({
      */
     enroll: function () {
         http.post(http.URL_ENROLL, {activityId: this.data.id}, data => {
-            if (data.code == 1) {
+            if (data.code === 1) {
                 let enrollment = new model.ActivityEnrollment();
                 enrollment.id = data.enrollmentId;
                 enrollment.status = 'ADMITTED';
@@ -60,9 +67,10 @@ Page({
     /**
      * 进入考试
      */
-    enterExam: function() {
-        let url = '/pages/paper/index?activityId='+this.data.id + '&resourceId='+this.data.resource.id
-            + '&activityEnrollmentId='+this.data.enrollment.id+'&mode='+constants.MODE_ANSWER;
+    enterExam: function () {
+        let url = '/pages/paper/index?activityId=' + this.data.id + '&resourceId=' + this.data.resource.id
+            + '&activityEnrollmentId=' + this.data.enrollment.id + '&mode=' + constants.MODE_ANSWER
+            + '&title=' + this.data.activity.title + '&time=' + this.data.resource.time;
         util.navigateTo(url);
     },
     getRemoteData() {

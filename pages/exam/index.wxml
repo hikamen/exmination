@@ -4,6 +4,9 @@
           bindtap="goToExamDetail">
         <view class="upper">
             <text class="title">{{item.title}}</text>
+            <view class="indicator">
+                <image src="../../icon/arrow-right.png" mode="scaleToFill"></image>
+            </view>
         </view>
         <view class="lower">
             <text>{{item.enrollDatetime}}</text>

@@ -13,11 +13,14 @@
     color: #cdcdc9;
 }
 .item .upper {
-    margin: 20rpx 0;
+    margin-top: 20rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 .item .status {
     float: right;
-
 }
 .item-hover {
     opacity: 0.5;
@@ -28,4 +31,8 @@
     color: #aaaaa6;
 }
 
+.indicator image {
+    width: 24px;
+    height: 24px;
+}
 
