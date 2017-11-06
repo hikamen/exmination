@@ -8,6 +8,8 @@ const model = require('../../model/activity');
 
 Page({
     data: {
+        id: '', //考试活动ID
+
         showEnrollBtn: true,
         showExamBtn: false,
         showHistoryBtn: false,
@@ -18,13 +20,13 @@ Page({
         resource: null,
         enrollment: null,
         resourceAttendance: null,
-        id: '', //考试活动ID
-        first: true //是否第一次显示
+        first: true, //是否第一次显示
+        showScore: false //是否显示分数
     },
     onLoad: function (option) {
         this.data.id = option.id;
         // this.data.id = '375763170083614720';
-        this.getRemoteData();
+        this._getRemoteData();
     },
     onShow: function () {
         if (!this.data.first) {
@@ -33,7 +35,7 @@ Page({
         this.data.first = false;
     },
     onPullDownRefresh: function () {
-        this.getRemoteData();
+        this._getRemoteData();
         setTimeout(() => {
             wx.stopPullDownRefresh();
         }, constants.PULL_DOWN_STOP_TIME);
@@ -49,11 +51,11 @@ Page({
                 enrollment.id = data.enrollmentId;
                 enrollment.status = 'ADMITTED';
 
-                let btnAttr = this.getBtnEnterAttr(this.data.activity, enrollment,
+                let btnAttr = this._getBtnEnterAttr(this.data.activity, enrollment,
                     this.data.resource, this.data.resourceAttendance);
                 util.showToast(data.message);
                 this.setData({
-                    showEnrollBtn: this.isBtnEnrollShow(this.data.activity, enrollment),
+                    showEnrollBtn: this._isBtnEnrollShow(this.data.activity, enrollment),
                     showExamBtn: btnAttr.show,
                     examBtnLabel: btnAttr.label,
                     examBtnDisabled: btnAttr.disabled,
@@ -68,12 +70,17 @@ Page({
      * 进入考试
      */
     enterExam: function () {
-        let url = '/pages/paper/index?activityId=' + this.data.id + '&resourceId=' + this.data.resource.id
+        let url = '/pages/exam-paper/index?activityId=' + this.data.id + '&resourceId=' + this.data.resource.id
             + '&activityEnrollmentId=' + this.data.enrollment.id + '&mode=' + constants.MODE_ANSWER
             + '&title=' + this.data.activity.title + '&time=' + this.data.resource.time;
         util.navigateTo(url);
     },
-    getRemoteData() {
+    goToHistory: function () {
+        let url = '/pages/exam-history/index?activityId=' + this.data.id + '&resourceId=' + this.data.resource.id
+            + '&enrollmentId=' + this.data.enrollment.id +'&title='+this.data.activity.title;
+        util.navigateTo(url);
+    },
+    _getRemoteData() {
         http.get(http.URL_EVALUATION_DETAIL, {activityId: this.data.id}, data => {
             let activity = new model.Activity(data);
             let resource = new model.Resource();
@@ -84,11 +91,12 @@ Page({
             }
             let attendance = new model.ActivityAttendance(data.extra.attendance);
             let enrollment = new model.ActivityEnrollment(data.extra.enrollment);
-            let btnAttr = this.getBtnEnterAttr(activity, enrollment, resource, resourceAttendance);
+            let btnAttr = this._getBtnEnterAttr(activity, enrollment, resource, resourceAttendance);
             this.setData({
-                showEnrollBtn: this.isBtnEnrollShow(activity, enrollment),
+                showEnrollBtn: this._isBtnEnrollShow(activity, enrollment),
                 showExamBtn: btnAttr.show,
-                showHistoryBtn: this.isBtnHistoryShow(resourceAttendance),
+                showHistoryBtn: this._isBtnHistoryShow(resourceAttendance),
+                showScore: this._isScoreShow(resourceAttendance.status),
                 examBtnLabel: btnAttr.label,
                 examBtnDisabled: btnAttr.disabled,
                 activity: activity,
@@ -100,28 +108,32 @@ Page({
         });
     },
 
-    isBtnEnrollShow(activity, enrollment) {
-        return activity.enrollInd && enrollment.id == '';
+    _isScoreShow(status){
+        return status === 'PASS' || status === 'FAIL';
     },
 
-    isBtnHistoryShow(resourceAttendance) {
+    _isBtnEnrollShow(activity, enrollment) {
+        return activity.enrollInd && util.trim(enrollment.id) === '';
+    },
+
+    _isBtnHistoryShow(resourceAttendance) {
         return resourceAttendance.totalAttempt > 0;
     },
 
-    getBtnEnterAttr(activity, enrollment, resource, resourceAttendance) {
+    _getBtnEnterAttr(activity, enrollment, resource, resourceAttendance) {
         let show = false;
         let label = '进入考试';
         let disabled = false;
-        if (activity.id != '' && enrollment.id != '') {
+        if (util.trim(activity.id) !== '' && util.trim(enrollment.id) !== '') {
             let status = enrollment.status;
             switch (status) {
                 case 'ADMITTED': {
                     if (resourceAttendance.totalAttempt > 0) {
                         let totalAttempt = resourceAttendance.totalAttempt;
-                        if (resource.attempt == 0 || resource.attempt - totalAttempt > 0) {
+                        if (resource.attempt === 0 || resource.attempt - totalAttempt > 0) {
                             label = '再考一次';
                             show = true;
-                            if (resourceAttendance.status == 'SCORING') {
+                            if (resourceAttendance.status === 'SCORING') {
                                 show = true;
                                 disabled = true;
                                 label = '评分中';

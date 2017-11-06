@@ -1,6 +1,6 @@
 /**index.wxss**/
 .content {
-    padding-bottom: 200rpx;
+    padding-bottom: 260rpx;
 }
 .header text {
     margin: 0 20rpx;
@@ -33,8 +33,11 @@ textarea {
 .correct {
     color: #25dc38;
 }
+.half_correct {
+    color: #ffa500;
+}
 .wrong {
-    color: red;
+    color: #ff0000;
 }
 .type {
     font-size: 10pt;

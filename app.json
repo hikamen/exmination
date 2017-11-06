@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/exam/index",
+    "pages/exam-result/index",
     "pages/exam-history/index",
-    "pages/paper/index",
+    "pages/exam-paper/index",
     "pages/exam-detail/index",
     "pages/exam-my/index",
     "pages/login/index",

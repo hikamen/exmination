@@ -27,3 +27,10 @@
 .mg-bottom {
     margin-bottom: 200rpx;
 }
+
+.PASS {
+    color: #25dc38;
+}
+.FAIL {
+    color: #ff0000;
+}

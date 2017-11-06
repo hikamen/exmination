@@ -37,7 +37,7 @@
         <block wx:elif="{{question.type == 'F'}}">
             <view  wx:for="{{question.optionList}}"  wx:key="id">
                 <label>第{{index+1}}个空格的答案：</label>
-                <input class="blank" maxlength="30" value="{{questionRecord.optionRecords[index].answer}}"
+                <input class="blank {{questionRecord.optionRecords[index].blankClass}}" maxlength="30" value="{{questionRecord.optionRecords[index].answer}}"
                        disabled="{{disabled}}" data-index="{{index}}" bindinput="blankInputHandle"/>
             </view>
         </block>
@@ -47,7 +47,7 @@
         </block>
     </view>
     <view class="answer" wx:if="{{show_answer}}">
-        <text>您的回答：{{questionRecord.correctStatusLabel}}</text>
+        <text class="{{questionRecord.statusClass}}">您的回答：{{questionRecord.correctStatusLabel}}</text>
         <text>本题得分：{{questionRecord.scoreStatus == 2 ? (questionRecord.score+'分'): '待评分'}}</text>
         <text wx:if="{{question.type == 'S' || question.type == 'M' || question.type =='C'}}">标准答案：{{question.answer}}</text>
         <text wx:elif="{{question.type == 'T'}}">标准答案：{{question.answer == 'true' ? '对':'错'}}</text>

@@ -115,4 +115,5 @@ module.exports = {
     URL_GET_PAPER_DATA: '/api/paper/get-data',
     URL_SUBMIT_PAPER: '/api/activity-resource/submit/',
     URL_GET_ANSWER_DATA: '/api/paper/get-answer-data',
+    URL_FIND_ATTENDANCE_HISTORY: '/api/activity-attendance/find-attendance-history',
 };

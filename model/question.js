@@ -151,9 +151,8 @@ class PaperRecord {
             this.id = data.id;
             this.score = data.score;
             this.scoreStatus = data.scoreStatus;
-            this.createdAt = data.createdAt;
+            this.createdAt = util.formatDatetime(data.createdAt);
             this.attendanceStatus = data.attendanceStatus;
-            this.statusText = data.statusText;
             this.learningSessionId = data.learningSessionId;
             this.learningToken = data.learningToken;
             this.activityEnrollmentId = data.activityEnrollmentId;
@@ -161,6 +160,17 @@ class PaperRecord {
             this.userId = data.userId;
             this.createdBy = data.createdBy;
             this.paperIndex = data.paperIndex;
+
+            this.formatStatusText();
+        }
+    }
+
+    formatStatusText() {
+        this.statusText = '评分中';
+        if (this.attendanceStatus === 'PASS') {
+            this.statusText = '通过';
+        } else if (this.attendanceStatus === 'FAIL') {
+            this.statusText = '不合格';
         }
     }
 }
@@ -181,6 +191,7 @@ class QuestionRecord {
     optionRecords = [];
     correctStatusLabel = '';
     isAnswered = false;
+    statusClass = ''; //控制评分状态样式
 
     constructor(data) {
         if (data) {
@@ -201,12 +212,24 @@ class QuestionRecord {
     }
 
     formatCorrectStatusLabel() {
-        switch(this.correctStatus) {
-            case -1: this.correctStatusLabel = '没有答题'; break;
-            case 0: this.correctStatusLabel = '错误'; break;
-            case 1: this.correctStatusLabel = '部分正解'; break;
-            case 2: this.correctStatusLabel = '完全正确'; break;
-            default: this.correctStatusLabel = '--';
+        switch (this.correctStatus) {
+            case -1:
+                this.correctStatusLabel = '没有答题';
+                break;
+            case 0:
+                this.correctStatusLabel = '错误';
+                this.statusClass = 'wrong';
+                break;
+            case 1:
+                this.correctStatusLabel = '部分正确';
+                this.statusClass = 'half_correct';
+                break;
+            case 2:
+                this.correctStatusLabel = '完全正确';
+                this.statusClass = 'correct';
+                break;
+            default:
+                this.correctStatusLabel = '--';
         }
     }
 
@@ -223,6 +246,8 @@ class OptionRecord {
     createdAt = '';
     createdBy = '';
 
+    blankClass = ''; //控制填空题每空的样式
+
     constructor(data) {
         if (data) {
             this.id = data.id;
@@ -234,6 +259,12 @@ class OptionRecord {
             this.correctInd = data.correctInd;
             this.createdAt = data.createdAt;
             this.createdBy = data.createdBy;
+
+            if (this.correctInd === true) {
+                this.blankClass = 'correct';
+            } else if (this.correctInd === false) {
+                this.blankClass = 'wrong';
+            }
         }
     }
 }

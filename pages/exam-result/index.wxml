@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view class="content">
+    <block wx:for="{{questionRecords}}" wx:key="id" >
+        <button class="{{item.statusClass}}" plain="true" size="mini" bindtap="viewPaper"
+                data-index="{{index}}" >{{index+1}}</button>
+    </block>
+</view>

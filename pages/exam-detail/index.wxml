@@ -2,6 +2,7 @@
 <view class="content" wx:if="{{activity!= null && activity.id !=''  && resource!=null && resource.id != ''}}">
     <view class="section">
         <text class="title">{{activity.title}}</text>
+        <text wx:if="{{showScore}}" class="{{'score '+resourceAttendance.status}}">{{resourceAttendance.finalScore}}</text>
     </view>
     <view class="section">
         <view>
@@ -51,7 +52,7 @@
             <button type="primary" disabled="{{examBtnDisabled}}" bindtap="enterExam">{{examBtnLabel}}</button>
         </view>
         <view wx:if="{{showHistoryBtn}}" class="{{showHistoryBtn && showExamBtn ? 'col': ''}}">
-            <button type="primary">查看历史</button>
+            <button type="primary" bindtap="goToHistory">查看历史</button>
         </view>
     </view>
 </view>

@@ -10,6 +10,12 @@
     margin-right: 40rpx;
 }
 
+.score {
+    float: right;
+    font-size: 16pt;
+    text-decoration: underline;
+}
+
 .footer {
     margin: 30rpx 0;
     bottom: 10rpx;

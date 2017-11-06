@@ -43,6 +43,12 @@ Page({
         this.data.resourceId = option.resourceId;
         this.data.activityEnrollmentId = option.activityEnrollmentId;
         this.data.mode = option.mode;
+        if(option.questionIndex) {
+            this.data.currentIndex = parseInt(option.questionIndex);
+        }
+        if(option.learningSessionId) {
+            this.data.learningSessionId = option.learningSessionId;
+        }
         let timeInMinute = util.trim(option.time);
         this.data.timeInMinute = timeInMinute;
 
@@ -58,48 +64,60 @@ Page({
             title: option.title || ''
         });
 
-        this._getPaperData(0);
+        this._openPaper(this.data.currentIndex);
     },
     _isChoiceQuestion: function (type) {
         return type === 'S' || type === 'M' || type === 'C';
     },
 
-    _getPaperData: function (index) {
+    _openPaper: function (index) {
+        if(this.data.mode === constants.MODE_ANSWER) {
+            let params = {
+                activityId: this.data.activityId,
+                activityEnrollmentId: this.data.activityEnrollmentId
+            };
+            http.get(http.URL_OPEN_PAPER + this.data.resourceId, params, result => {
+                this.data.learningSessionId = result.learningSessionId;
+                this.data.learningToken = result.learningToken;
+                this._getPaperData(index);
+            });
+        } else {
+            this._getPaperData(index);
+        }
+
+    },
+    _getPaperData:function (index) {
         let params = {
             activityId: this.data.activityId,
-            activityEnrollmentId: this.data.activityEnrollmentId
+            activityEnrollmentId: this.data.activityEnrollmentId,
+            resourceId:  this.data.resourceId,
+            mode: this.data.mode,
+            learningSessionId: this.data.learningSessionId
         };
-        http.get(http.URL_OPEN_PAPER + this.data.resourceId, params, result => {
-            this.data.learningSessionId = result.learningSessionId;
-            this.data.learningToken = result.learningToken;
 
-            params.resourceId = this.data.resourceId;
-            params.mode = this.data.mode;
-            params.learningSessionId = result.learningSessionId;
-            http.get(http.URL_GET_PAPER_DATA, params, data => {
-                this.data.questionList = this._parsePaperData(data);
-                this.setData({
-                    total: this.data.questionList.length,
-                    disabled: this.data.mode === constants.MODE_POST_ANSWER
-                });
-                if (this.data.mode === constants.MODE_POST_ANSWER) {
-                    this._getAnswerData(index);
-                } else {
-                    for (let i = 0; i < this.data.questionList.length; i++) {
-                        let que = this.data.questionList[i];
-                        let queRecord = new que_model.QuestionRecord();
-                        queRecord.questionId = que.id;
-                        queRecord.type = que.type;
-                        queRecord.index = i;
-                        this.data.questionRecords.push(queRecord);
-                    }
-                    this._setCurrentQuestion(index);
-                    util.showAlert('考试即将开始，请不要随意返回或者关闭小程序，否则会导致考试中断,谢谢！');
-                }
-                this._startTimer();
+        http.get(http.URL_GET_PAPER_DATA, params, data => {
+            this.data.questionList = this._parsePaperData(data);
+            this.setData({
+                total: this.data.questionList.length,
+                disabled: this.data.mode === constants.MODE_POST_ANSWER,
+                show_answer: this.data.mode === constants.MODE_POST_ANSWER
             });
+            if (this.data.mode === constants.MODE_POST_ANSWER) {
+                this._getAnswerData(index);
+            } else {
+                for (let i = 0; i < this.data.questionList.length; i++) {
+                    let que = this.data.questionList[i];
+                    let queRecord = new que_model.QuestionRecord();
+                    queRecord.questionId = que.id;
+                    queRecord.type = que.type;
+                    queRecord.index = i;
+                    this.data.questionRecords.push(queRecord);
+                }
+                this._setCurrentQuestion(index);
+                util.showAlert('考试即将开始，请不要随意返回或者关闭小程序，否则会导致考试中断,谢谢！');
+            }
+            this._startTimer();
         });
-
     },
     _startTimer: function () {
         if (this.data.timeInSecond > 0) {
@@ -112,7 +130,7 @@ Page({
                 if (this.data.timeInSecond === 0 || this.data.allowPause) {
                     clearInterval(this.data.intervalId); //停止倒计时
                     if (this.data.timeInSecond === 0) {
-                        this.submitHandle();
+                        this.submitHandle(true);
                     }
                 }
                 if (this.data.timeInSecond === constants.WARNING_TIME) {
@@ -220,7 +238,7 @@ Page({
             }
             questionRecord.isAnswered = true;
         } else {
-            questionRecord.isAnswered = false;
+            questionRecord.isAnswered
         }
     },
     /**
@@ -259,24 +277,32 @@ Page({
             questionRecord.isAnswered = true;
         }
     },
-    submitHandle: function () {
-        this._checkUserAnswer(() => {
-            let paperRecord = new que_model.PaperRecord();
-            paperRecord.activityEnrollmentId = this.data.activityEnrollmentId;
-            paperRecord.learningSessionId = this.data.learningSessionId;
-            paperRecord.resourceId = this.data.resourceId;
-            paperRecord.autoInd = false;
-            paperRecord.questionRecords = this.data.questionRecords;
-            let params = {
-                'data': JSON.stringify(paperRecord),
-                'activityId': this.data.activityId,
-                'activityEnrollmentId': this.data.activityEnrollmentId,
-                'learningToken': this.data.learningToken
-            };
-            http.post(http.URL_SUBMIT_PAPER + this.data.resourceId, params, data => {
-                util.showAlert('恭喜您已经成功提交试卷，请稍后查看评分', () => {
-                    wx.navigateBack();
-                });
+    submitHandle: function (force) {
+        if (force === true) {
+            util.showAlert('考试时间已经结束，即将自动提交试卷', () => {
+                this._doSubmit();
+            })
+        } else
+            this._checkUserAnswer(() => {
+                this._doSubmit();
+            });
+    },
+    _doSubmit: function () {
+        let paperRecord = new que_model.PaperRecord();
+        paperRecord.activityEnrollmentId = this.data.activityEnrollmentId;
+        paperRecord.learningSessionId = this.data.learningSessionId;
+        paperRecord.resourceId = this.data.resourceId;
+        paperRecord.autoInd = false;
+        paperRecord.questionRecords = this.data.questionRecords;
+        let params = {
+            'data': JSON.stringify(paperRecord),
+            'activityId': this.data.activityId,
+            'activityEnrollmentId': this.data.activityEnrollmentId,
+            'learningToken': this.data.learningToken
+        };
+        http.post(http.URL_SUBMIT_PAPER + this.data.resourceId, params, data => {
+            util.showAlert('恭喜您已经成功提交试卷，请稍后查看评分', () => {
+                wx.navigateBack();
             });
         });
     },
@@ -289,16 +315,17 @@ Page({
                 }
             }
             if (missing.length > 0) {
-                util.showConfirm('您还有' + missing.length + '道题目，包括(' + missing.join('、') + ')还没问答，确认提交吗？',
+                util.showConfirm('您还有' + missing.length + '道题目，题号(' + missing.join('、') + ')还没问答，确认提交吗？',
                     callback);
             } else {
                 util.showConfirm('您已经回答完所有题目，确认提交吗？', callback);
             }
         }
     },
-    _setCurrentQuestion: function (i) {
-        let question = this.data.questionList[i];
-        let questionRecord = this.data.questionRecords[i];
+    _setCurrentQuestion: function (index) {
+        let question = this.data.questionList[index];
+        let questionRecord = this.data.questionRecords[index];
+        console.log(questionRecord);
         if (questionRecord && this._isChoiceQuestion(question.type)) {
             for (let opt of question.optionList) {
                 if (questionRecord.optionRecords && questionRecord.optionRecords.length > 0) {
@@ -314,15 +341,17 @@ Page({
         let previousBtnDisabled = false;
         let nextBtnDisabled = false;
         let showSubmitBtn = false;
-        if (i === 0) {
+        if (index === 0) {
             previousBtnDisabled = true;
         }
-        if (i === this.data.questionList.length - 1) {
+        if (index === this.data.questionList.length - 1) {
             nextBtnDisabled = true;
-            showSubmitBtn = true;
+            if(this.data.mode === constants.MODE_ANSWER) {
+                showSubmitBtn = true;
+            }
         }
         this.setData({
-            currentIndex: i,
+            currentIndex: index,
             question: question,
             questionRecord: questionRecord,
             previousBtnDisabled: previousBtnDisabled,
