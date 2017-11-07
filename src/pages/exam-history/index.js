@@ -53,9 +53,12 @@ Page({
     },
     goViewResult(event) {
         let url = '/pages/exam-result/index?resourceId=' + this.data.resourceId
-            + '&activityEnrollmentId=' + this.data.enrollmentId+
-            '&learningSessionId='+event.currentTarget.dataset.sessionId +'&activityId='+this.data.activityId
-            + '&title='+this.data.title;
+            + '&activityEnrollmentId=' + this.data.enrollmentId +
+            '&learningSessionId=' + event.currentTarget.dataset.sessionId + '&activityId=' + this.data.activityId
+            + '&title=' + this.data.title;
         util.navigateTo(url);
+    },
+    goViewRanking(event) {
+
     }
 });

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="content">
+<view class="content mg-bottom">
     <view wx:for="{{paperRecords}}" wx:key="id" data-session-id="{{item.learningSessionId}}" class="item" hover-class="item-hover"
           bindtap="goViewResult">
         <view class="left">
@@ -20,5 +20,10 @@
     </view>
     <view class="item-bottom">
         <text>{{noDataLabel}}</text>
+    </view>
+</view>
+<view class="footer" >
+    <view class="submit-area">
+        <button type="primary" bindtap="goViewRanking">查看排行榜</button>
     </view>
 </view>

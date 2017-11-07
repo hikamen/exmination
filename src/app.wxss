@@ -12,6 +12,12 @@
     background: #f6f6f6;
 }
 
+.footer .submit-area {
+    display: block;
+    background: #fff;
+    padding: 20rpx;
+}
+
 .section {
     font-size: 12pt;
     color: #242725;

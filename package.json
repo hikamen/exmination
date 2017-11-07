@@ -1,0 +1,27 @@
+{
+  "name": "SunExam",
+  "description": "鑫考试",
+  "version": "1.0.0",
+  "author": "Kamen Chen",
+  "homepage": "http://www.sunontalent.com/",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/build-dev.js --color"
+  },
+  "dependencies": {
+    "zanui-weapp": "^2.3.2"
+  },
+  "devDependencies": {
+    "fs-extra": "^4.0.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.8",
+    "node-watch": "^0.5.5",
+    "postcss-calc": "^6.0.1",
+    "postcss-easy-import": "^3.0.0",
+    "precss": "^2.0.0",
+    "shelljs": "^0.7.8"
+  }
+}

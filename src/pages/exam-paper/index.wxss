@@ -62,11 +62,6 @@ textarea {
     display: inline-block;
 }
 
-.footer .submit-area {
-    display: block;
-    background: #fff;
-    padding: 20rpx;
-}
 
 .footer button {
     border: 0;

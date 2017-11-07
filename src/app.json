@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/exam/index",
+    "pages/exam-ranking/index",
     "pages/exam-result/index",
     "pages/exam-history/index",
     "pages/exam-paper/index",

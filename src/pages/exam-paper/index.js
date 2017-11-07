@@ -114,7 +114,7 @@ Page({
                     this.data.questionRecords.push(queRecord);
                 }
                 this._setCurrentQuestion(index);
-                util.showAlert('考试即将开始，请不要随意返回或者关闭小程序，否则会导致考试中断,谢谢！');
+                util.showAlert('考试即将开始，请不要随意返回或者关闭小程序，以免造成答题数据丢失，祝您考试成功！');
             }
             this._startTimer();
         });

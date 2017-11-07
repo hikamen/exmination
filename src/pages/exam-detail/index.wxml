@@ -46,7 +46,7 @@
     </view>
     <view class="footer">
         <view wx:if="{{showEnrollBtn}}">
-            <button type="primary" bindtap="enroll">立即报名</button>
+            <button type="warn" bindtap="enroll">立即报名</button>
         </view>
         <view wx:if="{{showExamBtn}}" class="{{showHistoryBtn && showExamBtn ? 'col': ''}}">
             <button type="primary" disabled="{{examBtnDisabled}}" bindtap="enterExam">{{examBtnLabel}}</button>
