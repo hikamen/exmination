@@ -1,5 +1,5 @@
 /**index.wxss**/
-.item {
+/*.item {
     background: #ffffff;
     border-bottom: 1rpx solid #f1f1f1;
     padding-bottom: 20rpx;
@@ -35,5 +35,10 @@
 .indicator image {
     width: 24px;
     height: 24px;
-}
+}*/
 
+.img {
+    margin-right: 5px;
+    vertical-align: middle;
+    width:80px; height: 80px;
+}

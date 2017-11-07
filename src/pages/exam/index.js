@@ -33,9 +33,6 @@ Page({
         });
         this.getRemoteData();
     },
-    goToExamDetail: function (event) {
-        util.navigateTo('/pages/exam-detail/index?id=' + event.currentTarget.dataset.id);
-    },
     getRemoteData: function () {
         let params = {
             page: this.data.page,

@@ -1,4 +1,5 @@
 const util = require('../utils/util');
+const http = require('../utils/http');
 
 /**
  * 考试活动
@@ -11,6 +12,8 @@ class Activity {
     enrollDatetime = '';
     objective = '';
     description = '';
+
+    coverUrl = '';
 
     enrollInd = false; //是否允许报名
 
@@ -25,6 +28,9 @@ class Activity {
             this.description = data.description;
             if (data.extra) {
                 this.enrollInd = data.extra.enrollInd;
+            }
+            if(data.cover && data.cover.files && data.cover.files.length>0) {
+                this.coverUrl = http.SERVER_NAME + data.cover.files[0].url;
             }
             this.format();
         }
