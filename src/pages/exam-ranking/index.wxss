@@ -1,3 +1,67 @@
 /**index.wxss**/
 
+.page .header {
+    background: #47bc62;
+    width: 100%;
+    height: 400rpx;
+}
+
+.page .header image {
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 50%;
+}
+
+.header .upper {
+    text-align: center;
+    padding: 30rpx 0;
+}
+
+.img-wrapper {
+    text-align:center;
+    border-radius:50%;
+    display:inline-block;
+    width:150rpx;
+    height:150rpx;
+    border:10rpx solid #a3deb1;
+
+}
+.header .lower {
+    display: flex;
+    flex-direction: row;
+    color: #FFFFFF;
+}
+
+.header .lower .left {
+    width: 40%;
+    text-align: right;
+    padding-right: 50rpx;
+}
+.header .lower .left .score {
+    margin-right: 46rpx;
+}
+.header .lower .right {
+    width:40%;
+    text-align:left;
+    border-left:1px solid #FFFFFF;
+    padding-left:50rpx;
+
+}
+.header .lower .right .ranking {
+    margin-left: 50rpx;
+}
+
+.body image {
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 120rpx;
+    height: 120rpx;
+    border-radius:50%;
+}
+.body .weui-badge {
+    margin-right:20rpx;
+    height:30rpx;
+    min-width:36rpx;
+    padding:14rpx 10rpx;
+}
 

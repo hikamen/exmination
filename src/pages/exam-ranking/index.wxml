@@ -1,4 +1,46 @@
 <!--index.wxml-->
-<view class="content">
-    ranking
+<view class="page" wx:if="{{myRank != null}}">
+    <view class="header" >
+        <view class="upper">
+            <view class="img-wrapper">
+                <image src="{{myRank.user.userAvatar}}" mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="lower">
+            <view class="left">
+                <view>
+                    <text>我的成绩</text>
+                </view>
+                <view>
+                    <text class="score">{{myRank.score}}</text>
+                </view>
+            </view>
+            <view class="right">
+                <view>
+                    <text>我的名次</text>
+                </view>
+                <view>
+                    <text class="ranking">{{myRank.ranking > 0 ? myRank.ranking: '--'}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="body">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell" wx:for="{{rankList}}" wx:key="*this">
+                <view class="weui-badge k_bg_red" wx:if="{{item.ranking == 1}}">{{item.ranking}}</view>
+                <view class="weui-badge k_bg_yellow" wx:elif="{{item.ranking == 2}}">{{item.ranking}}</view>
+                <view class="weui-badge k_bg_green" wx:elif="{{item.ranking == 3}}">{{item.ranking}}</view>
+                <view class="weui-badge k_bg_dark_blue" wx:else>{{item.ranking}}</view>
+                <view class="weui-cell__hd">
+                    <image src="{{item.user.userAvatar}}" mode="aspectFill"></image>
+                </view>
+                <view class="weui-cell__bd">{{item.user.nickname}}</view>
+                <view class="weui-cell__ft">{{item.score}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{noDataLabel}}</view>
+    </view>
 </view>

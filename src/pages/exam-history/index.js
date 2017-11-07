@@ -59,6 +59,6 @@ Page({
         util.navigateTo(url);
     },
     goViewRanking(event) {
-
+        util.navigateTo('/pages/exam-ranking/index?activityId=' + this.data.activityId);
     }
 });

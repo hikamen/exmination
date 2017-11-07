@@ -58,10 +58,13 @@ textarea {
 .title {
     display: flex;
 }
+
+.footer {
+    background: #FFFFFF;
+}
 .footer>view {
     display: inline-block;
 }
-
 
 .footer button {
     border: 0;
@@ -90,4 +93,7 @@ textarea {
     color: #25dc38;
 }
 
+button[plain][disabled] {
+    background: #FFFFFF;
+}
 

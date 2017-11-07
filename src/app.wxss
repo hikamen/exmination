@@ -1,4 +1,43 @@
 /**app.wxss**/
+@import "style/weui.wxss";
+
+page{
+    background-color: #F8F8F8;
+    font-size: 16px;
+    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.page__hd {
+    padding: 40px;
+}
+.page__bd {
+    padding-bottom: 40px;
+}
+.page__bd_spacing {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.page__ft{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.page__title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.page__desc {
+    margin-top: 5px;
+    color: #888888;
+    text-align: left;
+    font-size: 14px;
+}
+
+.weui-loadmore__tips_in-line {
+    background: #F8F8F8;
+}
 
 .content {
     padding: 20rpx;
@@ -9,12 +48,11 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: #f6f6f6;
+    background: #F8F8F8;
 }
 
 .footer .submit-area {
     display: block;
-    background: #fff;
     padding: 20rpx;
 }
 
@@ -40,3 +78,43 @@
 .FAIL {
     color: #ff0000;
 }
+
+.k_bg_green {
+    background: #0abb07;
+}
+.k_bg_dark {
+    background: #353535;
+}
+.k_bg_gray {
+    background: #888888;
+}
+.k_bg_dark_blue {
+    background: #586c94;
+}
+.k_bg_red {
+    background: #e64340;
+}
+.k_bg_yellow {
+    background: #db8b0b;
+}
+
+.k_green {
+    color: #0abb07;
+}
+.k_dark {
+    color: #353535;
+}
+.k_gray {
+    color: #888888;
+}
+.k_dark_blue {
+    color: #586c94;
+}
+.k_red {
+    color: #e64340;
+}
+.k_yellow {
+    color: #db8b0b;
+}
+
+

@@ -106,6 +106,7 @@ function _initToken() {
 module.exports = {
     get: get,
     post: post,
+    SERVER_NAME: SERVER_NAME,
     URL_LOGIN: '/api/login',
     URL_REGISTER: '/api/register',
     URL_EVALUATION_LIST: '/api/activity/evaluation-list',
@@ -116,4 +117,6 @@ module.exports = {
     URL_SUBMIT_PAPER: '/api/activity-resource/submit/',
     URL_GET_ANSWER_DATA: '/api/paper/get-answer-data',
     URL_FIND_ATTENDANCE_HISTORY: '/api/activity-attendance/find-attendance-history',
+    URL_FIND_USER_RANKING: '/api/activity-attendance/find-user-ranking',
+    URL_FIND_RANKING_LIST: '/api/activity-attendance/find-ranking-list',
 };

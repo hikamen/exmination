@@ -20,7 +20,6 @@
     margin: 30rpx 0;
     bottom: 10rpx;
     width: 95%;
-    background: #ffffff;
 }
 
 .footer view.col {
