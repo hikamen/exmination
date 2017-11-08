@@ -18,8 +18,8 @@
             <image src="../../icon/arrow-right.png" mode="scaleToFill"></image>
         </view>
     </view>
-    <view class="item-bottom">
-        <text>{{noDataLabel}}</text>
+    <view class="weui-loadmore weui-loadmore_line" wx:if="{{noDataLabel != ''}}">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{noDataLabel}}</view>
     </view>
 </view>
 <view class="footer" >

@@ -12,11 +12,6 @@
 .item-hover {
     opacity: 0.5;
 }
-.item-bottom {
-    margin-top: 20rpx;
-    text-align: center;
-    color: #aaaaa6;
-}
 
 .item .left {
     width: 90%;

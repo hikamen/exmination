@@ -17,13 +17,13 @@
 }
 
 .footer {
-    margin: 30rpx 0;
-    bottom: 10rpx;
     width: 95%;
 }
-
+.footer view {
+    padding: 20rpx;
+}
 .footer view.col {
-    margin: 0 20rpx;
+    padding: 0 20rpx;
     display: inline-block;
 }
 

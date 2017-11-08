@@ -1,0 +1,43 @@
+<!--index.wxml-->
+<import src="../../templates/activity.tmpl.wxml" />
+
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+            </view>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                    <view class="weui-panel weui-panel_access">
+                        <view class="weui-panel__bd">
+                            <template is="activityList" data="{{list: examList}}"/>
+                        </view>
+                    </view>
+                    <view class="page__ft" wx:if="{{noDataLabel != ''}}">
+                        <view class="weui-loadmore weui-loadmore_line">
+                            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{noDataLabel}}</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                    <view class="weui-panel weui-panel_access">
+                        <view class="weui-panel__bd">
+                            <template is="activityList" data="{{list: examList2}}"/>
+                        </view>
+                    </view>
+                    <view class="page__ft"  wx:if="{{noDataLabel2 != ''}}">
+                        <view class="weui-loadmore weui-loadmore_line">
+                            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">{{noDataLabel2}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

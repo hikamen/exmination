@@ -110,6 +110,7 @@ module.exports = {
     URL_LOGIN: '/api/login',
     URL_REGISTER: '/api/register',
     URL_EVALUATION_LIST: '/api/activity/evaluation-list',
+    URL_MY_EVALUATION_LIST: '/api/activity/my-exam-list',
     URL_EVALUATION_DETAIL: '/api/activity/activity-detail',
     URL_ENROLL: '/api/activity-enrollment/enroll',
     URL_OPEN_PAPER: '/api/activity-resource/open/',

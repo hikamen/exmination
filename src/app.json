@@ -1,12 +1,12 @@
 {
   "pages": [
-    "pages/exam/index",
+    "pages/exam-center/index",
+    "pages/user-center/index",
     "pages/exam-ranking/index",
     "pages/exam-result/index",
     "pages/exam-history/index",
     "pages/exam-paper/index",
     "pages/exam-detail/index",
-    "pages/exam-my/index",
     "pages/login/index",
     "pages/index/index",
     "pages/logs/logs"
@@ -27,14 +27,14 @@
     "position": "bottom",
     "list": [
       {
-        "pagePath": "pages/exam/index",
-        "text": "考试列表",
+        "pagePath": "pages/exam-center/index",
+        "text": "考试中心",
         "iconPath": "icon/list.png",
         "selectedIconPath": "icon/list-selected.png"
       },
       {
-        "pagePath": "pages/exam-my/index",
-        "text": "我的考试",
+        "pagePath": "pages/user-center/index",
+        "text": "我的",
         "iconPath": "icon/mylsit.png",
         "selectedIconPath": "icon/mylsit-selected.png"
       }

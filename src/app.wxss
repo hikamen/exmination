@@ -38,7 +38,9 @@ page{
 .weui-loadmore__tips_in-line {
     background: #F8F8F8;
 }
-
+.weui-navbar {
+    background: #F8F8F8;
+}
 .content {
     padding: 20rpx;
 }

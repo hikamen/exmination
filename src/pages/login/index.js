@@ -24,7 +24,7 @@ Page({
             http.post(http.URL_LOGIN, event.detail.value, data => {
                 wx.setStorageSync(constants.TOKEN, data.token);
                 wx.reLaunch({
-                    url: '/pages/exam/index'
+                    url: '/pages/exam-center/index'
                 });
             }, () => {
                 this.setData({
