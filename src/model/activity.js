@@ -18,7 +18,6 @@ class Activity {
     enrollInd = false; //是否允许报名
 
     constructor(data) {
-        console.log(data);
         if (data) {
             this.id = data.id;
             this.title = data.title;

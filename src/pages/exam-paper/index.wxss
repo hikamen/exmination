@@ -61,6 +61,8 @@ textarea {
 
 .footer {
     background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
 }
 .footer>view {
     display: inline-block;
@@ -72,6 +74,11 @@ textarea {
     padding: 0;
 }
 
+.footer .nav-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .footer .left {
     width: 34%;
     text-align: left;
@@ -82,8 +89,6 @@ textarea {
 }
 
 .footer .middle {
-    position: relative;
-    top: -40rpx;
     width: 28%;
     border-left:  1px solid #f1f1f1;
     border-right:  1px solid #f1f1f1;

@@ -1,15 +1,19 @@
 const util = require('util');
 const constants = require('constants');
 
-const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
+// const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
+const SERVER_NAME = 'https://szsafety.sun-learning.com';
+const EXCLUDE_PAGES = ['pages/login/index', 'pages/register/index'];
 
 const CODE_SUCCESS = 1;
 const CODE_ERROR = 0;
 const CODE_TOKEN_EXPIRE = -1;
 
 let token = '';
+let permitted= false;
 
 function doAfterRequestSuccess(res, callback, errCallback) {
+    console.log(res);
     if (res.statusCode === 200) {
         let apiResponse = res.data;
         switch (apiResponse.code) {
@@ -50,61 +54,86 @@ function doAfterRequestFail(err, errCallback) {
 
 function get(url, params, callback, errCallback) {
     _initToken();
-    util.showLoading();
-    wx.request({
-        url: SERVER_NAME + url,
-        data: params,
-        method: 'GET',
-        header: {
-            'X-AUTH-TOKEN': token
-        },
-        success: res => {
-            wx.hideLoading();
-            doAfterRequestSuccess(res, callback, errCallback);
-        },
-        fail: err => {
-            wx.hideLoading();
-            doAfterRequestFail(err, errCallback);
-        }
-    });
+    if(permitted) {
+        util.showLoading();
+        wx.request({
+            url: SERVER_NAME + url,
+            data: params,
+            method: 'GET',
+            header: {
+                'X-AUTH-TOKEN': token
+            },
+            success: res => {
+                wx.hideLoading();
+                doAfterRequestSuccess(res, callback, errCallback);
+            },
+            fail: err => {
+                wx.hideLoading();
+                doAfterRequestFail(err, errCallback);
+            }
+        });
+    }
 }
 
 function post(url, params, callback, errCallback) {
     _initToken();
-    util.showLoading('处理中...');
-    wx.request({
-        url: SERVER_NAME + url,
-        data: params,
-        method: 'POST',
-        header: {
-            'X-AUTH-TOKEN': token,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        success: res => {
-            wx.hideLoading();
-            doAfterRequestSuccess(res, callback, errCallback);
-        },
-        fail: err => {
-            wx.hideLoading();
-            doAfterRequestFail(err, errCallback);
-        }
-    });
+    if(permitted) {
+        util.showLoading('处理中...');
+        wx.request({
+            url: SERVER_NAME + url,
+            data: params,
+            method: 'POST',
+            header: {
+                'X-AUTH-TOKEN': token,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            success: res => {
+                wx.hideLoading();
+                doAfterRequestSuccess(res, callback, errCallback);
+            },
+            fail: err => {
+                wx.hideLoading();
+                doAfterRequestFail(err, errCallback);
+            }
+        });
+    }
 }
+
 
 function _initToken() {
     if (token == null || token == '') {
         let value = wx.getStorageSync(constants.TOKEN);
         if (value) {
             token = 'bearer ' + value;
+            permitted =true;
+        } else {
+            let pages = getCurrentPages();
+            if (pages && pages.length > 0) {
+                let route = pages[0].route;
+                let reLogin = true;
+                for (let exPage of EXCLUDE_PAGES) {
+                    if (route === exPage) {
+                        reLogin = false;
+                        break;
+                    }
+                }
+                if (reLogin) {
+                    util.redirectTo('/pages/login/index');
+                }
+                permitted = !reLogin;
+            }
         }
-        console.log('get token from storage', token);
     }
 }
 
+function clearToken() {
+    token = '';
+}
 
 module.exports = {
     get: get,
     post: post,
+    clearToken: clearToken,
     SERVER_NAME: SERVER_NAME,
     URL_LOGIN: '/api/login',
     URL_LOGOUT: '/api/logout',

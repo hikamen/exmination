@@ -70,7 +70,6 @@ Page({
         });
     },
     formSubmit: function (event) {
-        console.log(event);
         let user = event.detail.value;
 
         if(this._validate(user)) {

@@ -5,6 +5,7 @@
     margin-left: 30rpx;
     font-weight: bold;
     width: 100rpx;
+    margin-bottom: 30rpx;
 }
 
 .content button.correct {

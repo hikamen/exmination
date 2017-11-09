@@ -16,7 +16,6 @@ Page({
         questionRecords: []
     },
     onLoad: function (option) {
-        console.log(option);
         this.data.resourceId = option.resourceId;
         this.data.learningSessionId = option.learningSessionId;
         this.data.activityEnrollmentId = option.activityEnrollmentId;
@@ -52,7 +51,6 @@ Page({
         });
     },
     viewPaper: function (event) {
-        console.log(event);
         let url = '/pages/exam-paper/index?activityId=' + this.data.activityId + '&resourceId=' + this.data.resourceId
             + '&activityEnrollmentId=' + this.data.activityEnrollmentId+ '&mode=' + constants.MODE_POST_ANSWER
             + '&title=' + this.data.title + '&questionIndex='+event.currentTarget.dataset.index

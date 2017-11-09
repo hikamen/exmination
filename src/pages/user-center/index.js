@@ -28,6 +28,7 @@ Page({
         util.showConfirm('确定要注销登录吗？', () => {
             http.get(http.URL_LOGOUT, {}, (result) => {
                 wx.clearStorageSync();
+                http.clearToken();
                 util.redirectTo('/pages/login/index');
             })
         })

@@ -38,7 +38,6 @@ Page({
         warningTime: false
     },
     onLoad: function (option) {
-        console.log('paper', option);
         this.data.activityId = option.activityId;
         this.data.resourceId = option.resourceId;
         this.data.activityEnrollmentId = option.activityEnrollmentId;
@@ -325,7 +324,6 @@ Page({
     _setCurrentQuestion: function (index) {
         let question = this.data.questionList[index];
         let questionRecord = this.data.questionRecords[index];
-        console.log(questionRecord);
         if (questionRecord && this._isChoiceQuestion(question.type)) {
             for (let opt of question.optionList) {
                 if (questionRecord.optionRecords && questionRecord.optionRecords.length > 0) {

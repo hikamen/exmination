@@ -12,7 +12,6 @@ Page({
         submitLoading: false
     },
     onLoad: function () {
-        console.log('login');
     },
     formSubmit: function (event) {
         if (this._validUsername(event.detail.value.username)
@@ -79,7 +78,7 @@ Page({
         let valid = true;
         if (util.trim(value) === '') {
             this.setData({
-                errMsg: '用户名不能为空'
+                errMsg: '手机号不能为空'
             });
             valid = false;
         } else {

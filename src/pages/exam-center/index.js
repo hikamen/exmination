@@ -49,7 +49,7 @@ Page({
             activeIndex: parseInt(e.currentTarget.id)
         });
 
-        if(this.data.activeIndex === MY_EXAM_INDEX && !this.data.init2){
+        if (this.data.activeIndex === MY_EXAM_INDEX && !this.data.init2) {
             this.data.init2 = true;
             this.getMyExamData();
         }

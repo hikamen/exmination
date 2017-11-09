@@ -65,13 +65,15 @@
     <view wx:if="{{showSubmitBtn}}" class="submit-area">
         <button bindtap="submitHandle" type="primary" >提交试卷</button>
     </view>
-   <view class="left">
-       <button plain="true" bindtap="goPrevious" disabled="{{previousBtnDisabled}}">上一题</button>
-   </view>
-    <view class="middle">
-        <text><text class="current">{{currentIndex+1}}</text>/{{total}}</text>
-    </view>
-    <view class="right">
-        <button plain="true" bindtap="goNext" disabled="{{nextBtnDisabled}}">下一题</button>
+    <view class="nav-area">
+        <view class="left">
+            <button plain="true" bindtap="goPrevious" disabled="{{previousBtnDisabled}}">上一题</button>
+        </view>
+        <view class="middle">
+            <text><text class="current">{{currentIndex+1}}</text>/{{total}}</text>
+        </view>
+        <view class="right">
+            <button plain="true" bindtap="goNext" disabled="{{nextBtnDisabled}}">下一题</button>
+        </view>
     </view>
 </view>
