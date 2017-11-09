@@ -7,7 +7,9 @@ const constants = require('../../utils/constants');
 Page({
     data: {
         focusName: true,
-        errMsg: '',
+        warningMsg: '',
+        nameError: false,
+        passwordError: false,
         submitDisabled: false,
         submitLoading: false
     },
@@ -39,7 +41,7 @@ Page({
     },
 
     nameConfirm: function (event) {
-        if(this._validUsername(event.detail.value)) {
+        if (this._validUsername(event.detail.value)) {
             this.setData({
                 focusName: false
             });
@@ -62,29 +64,41 @@ Page({
     },
     _validPassword: function (value) {
         let valid = true;
+        let warningMsg = '';
         if (util.trim(value) === '') {
-            this.setData({
-                errMsg: '密码不能为空'
-            });
+            warningMsg = '密码不能为空';
             valid = false;
-        } else {
-            this.setData({
-                errMsg: ''
-            });
+        }
+        this.setData({
+            passwordError: !valid,
+            warningMsg: warningMsg
+        });
+        if (warningMsg !== '') {
+            setTimeout(() => {
+                this.setData({
+                    warningMsg: ''
+                });
+            }, 3000);
         }
         return valid;
     },
     _validUsername: function (value) {
         let valid = true;
+        let warningMsg = '';
         if (util.trim(value) === '') {
-            this.setData({
-                errMsg: '手机号不能为空'
-            });
+            warningMsg = '手机号不能为空';
             valid = false;
-        } else {
-            this.setData({
-                errMsg: ''
-            });
+        }
+        this.setData({
+            nameError: !valid,
+            warningMsg: warningMsg
+        });
+        if (warningMsg !== '') {
+            setTimeout(() => {
+                this.setData({
+                    warningMsg: ''
+                });
+            }, 3000);
         }
         return valid;
     }

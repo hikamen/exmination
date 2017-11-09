@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="page">
-        <view class="top-tips-warning" hidden="{{warningMsg == ''}}">{{warningMsg}}</view>
+    <view class="top-tips-warning" hidden="{{warningMsg == ''}}">{{warningMsg}}</view>
     <form bindsubmit="formSubmit" >
         <view class="page__bd">
             <view class="weui-cells weui-cells_after-title">

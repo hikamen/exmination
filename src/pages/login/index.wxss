@@ -1,34 +1,15 @@
 /**index.wxss**/
 
-.content {
-    padding: 100rpx 20rpx;
+.weui-flex__item {
+    padding: 20rpx;
+}
+.space {
+    width: 60rpx;
+    display: inline-block;
 }
 
-.section {
-    border: 1rpx solid #f1f1f1;
-    border-radius: 10rpx;
-}
-.section input {
-    padding: 20rpx 10rpx;
-    margin: 0 20rpx;
-}
-.section icon {
-    float: right;
-}
-.msg {
-    margin-top: 20rpx;
-    color: red;
-}
-.msg text {
-    position: relative;
-    top: -10rpx;
-}
-.separator {
-    border-top: 1rpx solid #f1f1f1;
-    margin: 0 20rpx;
-}
 .btn-area {
-    margin-top: 40rpx;
+    margin: 40rpx 20rpx 0;
 }
 
 button {
@@ -39,9 +20,10 @@ button.register {
     float: right;
     border: 0;
 }
+
 .img-wrapper {
     text-align: center;
-    margin-bottom: 60rpx;
+    margin: 60rpx 0;
 }
 .img-wrapper image {
     width: 128px;

@@ -1,28 +1,50 @@
 <!--index.wxml-->
-<view class="content">
+<view class="page">
+    <view class="top-tips-warning" hidden="{{warningMsg == ''}}">{{warningMsg}}</view>
     <view class="img-wrapper">
         <image src="../../icon/logo.png"></image>
     </view>
-    <form bindsubmit="formSubmit">
-        <view class="msg" wx:if="{{errMsg != ''}}">
-            <icon type="warn"/>
-            <text>{{errMsg}}</text>
-        </view>
-        <view class="section">
-            <view>
-                <input id="username" name="username" placeholder="请输入手机号" maxlength="11" type="number"
-                       confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focusName}}"
-                       bindblur="nameBlur" bindfocus="nameFocus"/>
+    <form bindsubmit="formSubmit" >
+        <view class="page__bd">
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input weui-cells_after-title">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">手机号码</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input"  name="username" placeholder="请输入手机号" maxlength="11" type="number"
+                               confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focusName}}"
+                               bindblur="nameBlur" bindfocus="nameFocus"/>
+                    </view>
+                    <view class="weui-cell__ft" wx:if="{{nameError}}">
+                        <icon type="warn" size="23" color="#E64340"></icon>
+                    </view>
+                    <!--<view class="weui-cell__ft">
+                        <view class="weui-vcode-btn">获取验证码</view>
+                    </view>-->
+                </view>
+                <view class="weui-cell weui-cell_input weui-cells_after-title">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">密
+                            <view class="space"></view>
+                            码
+                        </view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" name="password" placeholder="请输入密码" password="true" maxlength="30"
+                               confirm-type="done" bindconfirm="passwordConfirm" bindblur="passwordBlur"/>
+                    </view>
+                    <view class="weui-cell__ft" wx:if="{{passwordError}}">
+                        <icon type="warn" size="23" color="#E64340"></icon>
+                    </view>
+                </view>
             </view>
-            <view class="separator"></view>
-            <view>
-                <input id="password" name="password" placeholder="请输入密码" password="true" maxlength="30"
-                       confirm-type="done" bindconfirm="passwordConfirm" bindblur="passwordBlur"/>
-            </view>
         </view>
-        <view class="btn-area">
-            <button formType="submit" type="primary" disabled="{{submitDisabled}}" loading="{{submitLoading}}">登录</button>
-            <button bindtap="goToRegistration" plain="true" size="mini" class="register">立即注册</button>
+        <view class="page__ft">
+            <view class="btn-area">
+                <button formType="submit" type="primary" disabled="{{submitDisabled}}" loading="{{submitLoading}}">登录</button>
+                <button bindtap="goToRegistration" plain="true" size="mini" class="register">立即注册</button>
+            </view>
         </view>
     </form>
 </view>
