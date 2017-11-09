@@ -12,7 +12,6 @@ let token = '';
 function doAfterRequestSuccess(res, callback, errCallback) {
     if (res.statusCode === 200) {
         let apiResponse = res.data;
-        console.log(apiResponse);
         switch (apiResponse.code) {
             case CODE_ERROR: {
                 let message = apiResponse.message || '服务器处理请求出现错误';
@@ -108,7 +107,11 @@ module.exports = {
     post: post,
     SERVER_NAME: SERVER_NAME,
     URL_LOGIN: '/api/login',
-    URL_REGISTER: '/api/register',
+    URL_LOGOUT: '/api/logout',
+    URL_REGISTER: '/api/user/register',
+    URL_GET_PROFILE: '/api/user/profile',
+    URL_GET_DEPARTMENTS: '/api/department/get-data',
+    URL_GET_POSITIONS: '/api/position/get-data',
     URL_EVALUATION_LIST: '/api/activity/evaluation-list',
     URL_MY_EVALUATION_LIST: '/api/activity/my-exam-list',
     URL_EVALUATION_DETAIL: '/api/activity/activity-detail',

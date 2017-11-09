@@ -7,7 +7,7 @@
         </view>
         <view class="section">
             <view>
-                <input id="username" name="username" placeholder="请输入用户名" maxlength="30"
+                <input id="username" name="username" placeholder="请输入手机号" maxlength="11" type="number"
                        confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focusName}}"
                        bindblur="nameBlur" bindfocus="nameFocus"/>
             </view>

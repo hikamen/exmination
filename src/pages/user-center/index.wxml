@@ -1,4 +1,16 @@
 <!--index.wxml-->
-<view class="page">
-    user center
+<view class="page" wx:if="{{user != null}}">
+    <view class="header" >
+        <view class="upper">
+            <view class="img-wrapper">
+                <image src="{{user.userAvatar}}" mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="lower">
+            <text>{{user.fullname}}</text>
+        </view>
+    </view>
+    <view class="body">
+        <button type="warn" bindtap="logoutHandle">注销登录</button>
+    </view>
 </view>

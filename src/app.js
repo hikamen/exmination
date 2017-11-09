@@ -9,7 +9,7 @@ App({
         if (token == null || token == '') {
             wx.reLaunch({
                 url: '/pages/login/index'
-            })
+            });
         }
     },
     globalData: {

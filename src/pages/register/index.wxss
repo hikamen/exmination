@@ -1,0 +1,12 @@
+/**index.wxss**/
+
+.weui-flex__item {
+    padding: 20rpx;
+}
+.space {
+    width: 80rpx;
+    display: inline-block;
+}
+.placeholder {
+    color: #7b7b7b;
+}

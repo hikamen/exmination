@@ -118,5 +118,16 @@ page{
 .k_yellow {
     color: #db8b0b;
 }
-
+.top-tips-warning {
+    font-size: 12px;
+    position: fixed;
+    top: 0;
+    color: #FFFFFF;
+    text-align: center;
+    min-width: 96%;
+    background: #e64340;
+    z-index: 10000;
+    opacity: 0.8;
+    padding: 20rpx;
+}
 

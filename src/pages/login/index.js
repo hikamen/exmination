@@ -36,7 +36,7 @@ Page({
     },
 
     goToRegistration: function () {
-        console.log('registration');
+        util.navigateTo('/pages/register/index');
     },
 
     nameConfirm: function (event) {

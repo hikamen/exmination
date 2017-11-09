@@ -104,7 +104,6 @@ Page({
                     noDataLabel: label,
                     examList: list
                 });
-                console.log(this.data);
             });
     },
     getMyExamData: function () {
@@ -115,7 +114,6 @@ Page({
                     noDataLabel2: label,
                     examList2: list
                 });
-                console.log(this.data);
             });
     },
     getRemoteData: function (page, limit, url, list, callback) {
@@ -136,7 +134,7 @@ Page({
                 callback(label, list);
             } else {
                 let label = constants.NO_DATA_LABEL;
-                if (list > 0) {
+                if (list.length > 0) {
                     label = constants.NO_MORE_DATA_LABEL;
                 }
                 callback(label);
