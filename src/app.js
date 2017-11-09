@@ -6,7 +6,8 @@ const constants = require('./utils/constants');
 App({
     globalData: {
     },
-    onLaunch: function () {
+    onLaunch: function (option) {
+        console.log('launch', option);
         this._login();
     },
     onShow: function () {

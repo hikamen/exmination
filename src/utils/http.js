@@ -138,7 +138,7 @@ module.exports = {
     URL_LOGIN: '/api/login',
     URL_LOGOUT: '/api/logout',
     URL_REGISTER: '/api/user/register',
-    URL_GET_PROFILE: '/api/user/profile',
+    URL_GET_PROFILE: '/api/user/userInfo',
     URL_GET_DEPARTMENTS: '/api/department/get-data',
     URL_GET_POSITIONS: '/api/position/get-data',
     URL_EVALUATION_LIST: '/api/activity/evaluation-list',

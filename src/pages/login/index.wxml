@@ -1,5 +1,8 @@
 <!--index.wxml-->
 <view class="content">
+    <view class="img-wrapper">
+        <image src="../../icon/logo.png"></image>
+    </view>
     <form bindsubmit="formSubmit">
         <view class="msg" wx:if="{{errMsg != ''}}">
             <icon type="warn"/>
