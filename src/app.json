@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/exam-center/index",
+    "pages/exam-history/index",
     "pages/user-center/index",
     "pages/register/index",
     "pages/exam-ranking/index",
     "pages/exam-result/index",
-    "pages/exam-history/index",
     "pages/exam-paper/index",
     "pages/exam-detail/index",
     "pages/login/index"
@@ -40,8 +40,8 @@
     ]
   },
   "networkTimeout": {
-    "request": 30000,
-    "connectSocket": 30000,
+    "request": 60000,
+    "connectSocket": 60000,
     "uploadFile": 60000,
     "downloadFile": 60000
   },

@@ -61,7 +61,7 @@ page{
 .section {
     font-size: 12pt;
     color: #242725;
-    border-bottom: 1rpx solid #f1f1f1;
+    border-bottom: 1rpx solid #dadada;
     padding: 20rpx 0;
 }
 

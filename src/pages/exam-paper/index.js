@@ -35,7 +35,7 @@ Page({
         remainingTime: '', //页面上显示的倒数时间
         intervalId: -1, //控制计时器倒数的实例ID,
         allowPause: false,
-        warningTime: false
+        warningTime: false //控制页面上倒计时的样式，时间快到时红色显示
     },
     onLoad: function (option) {
         this.data.activityId = option.activityId;
@@ -324,18 +324,7 @@ Page({
     _setCurrentQuestion: function (index) {
         let question = this.data.questionList[index];
         let questionRecord = this.data.questionRecords[index];
-        if (questionRecord && this._isChoiceQuestion(question.type)) {
-            for (let opt of question.optionList) {
-                if (questionRecord.optionRecords && questionRecord.optionRecords.length > 0) {
-                    for (let optRecord of questionRecord.optionRecords) {
-                        if (optRecord.optionId === opt.id) {
-                            opt.checked = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        this._preProcessOptionChecked(question, questionRecord);
         let previousBtnDisabled = false;
         let nextBtnDisabled = false;
         let showSubmitBtn = false;
@@ -356,5 +345,19 @@ Page({
             nextBtnDisabled: nextBtnDisabled,
             showSubmitBtn: showSubmitBtn
         });
+    },
+    _preProcessOptionChecked: function (question, questionRecord) {
+        if (questionRecord && this._isChoiceQuestion(question.type)) {
+            for (let opt of question.optionList) {
+                if (questionRecord.optionRecords && questionRecord.optionRecords.length > 0) {
+                    for (let optRecord of questionRecord.optionRecords) {
+                        if (optRecord.optionId === opt.id) {
+                            opt.checked = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 });

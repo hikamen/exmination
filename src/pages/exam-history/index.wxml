@@ -1,5 +1,9 @@
 <!--index.wxml-->
 <view class="content mg-bottom">
+    <view>
+        <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+        <view class="policy">{{scorePolicy}}</view>
+    </view>
     <view wx:for="{{paperRecords}}" wx:key="id" data-session-id="{{item.learningSessionId}}" class="item" hover-class="item-hover"
           bindtap="goViewResult">
         <view class="left">

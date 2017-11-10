@@ -41,3 +41,13 @@
     width: 24px;
     height: 24px;
 }
+
+canvas {
+    height: 180px;
+}
+.policy{
+    text-align: center;
+    margin:20rpx;
+    font-size: 14px;
+    color: #adada9;
+}
