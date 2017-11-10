@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="content mg-bottom">
-    <view>
+    <view wx:if="{{paperRecords.length > 0}}">
         <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
         <view class="policy">{{scorePolicy}}</view>
     </view>

@@ -13,7 +13,7 @@
   "window": {
     "navigationBarBackgroundColor": "#fafafa",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "鑫考试",
+    "navigationBarTitleText": "随鑫考",
     "backgroundColor": "#f6f6f6",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": true
