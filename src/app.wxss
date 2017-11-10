@@ -74,13 +74,6 @@ page{
     margin-bottom: 200rpx;
 }
 
-.PASS {
-    color: #25dc38;
-}
-.FAIL {
-    color: #ff0000;
-}
-
 .k_bg_green {
     background: #0abb07;
 }

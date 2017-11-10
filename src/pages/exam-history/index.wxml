@@ -7,11 +7,11 @@
                 <text>{{item.createdAt}}</text>
             </view>
             <view class="score">
-                <text wx:if="{{item.scoreStatus == 2}}" ><text class="{{item.attendanceStatus}}">{{item.score}}</text>分</text>
+                <text wx:if="{{item.scoreStatus == 2}}" ><text class="{{item.statusClass}}">{{item.score}}</text>分</text>
                 <text wx:else>--</text>
             </view>
             <view class="status">
-                <text class="{{item.attendanceStatus}}">{{item.statusText}}</text>
+                <text class="{{item.statusClass}}">{{item.statusText}}</text>
             </view>
         </view>
         <view class="indicator">

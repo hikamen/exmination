@@ -125,6 +125,9 @@ Page({
             if (result.numberOfElements > 0) {
                 for (let item of result.content) {
                     let exam = new model.Activity(item);
+                    if(item.extra && item.extra.attendance) {
+                        exam.attendance= new model.ActivityAttendance(item.extra.attendance);
+                    }
                     list.push(exam);
                 }
                 let label = '';

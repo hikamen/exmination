@@ -7,7 +7,7 @@
         <text>{{question.sectionTitle}}</text>
     </view>
     <view class="section title">
-        <text>{{question.content}}<text class="type">[{{question.typeLabel}} | {{question.score}}分]</text> </text>
+        <text class="k_dark_blue">{{question.content}}<text class="type">[{{question.typeLabel}} | {{question.score}}分]</text> </text>
     </view>
 </view>
 <view class="content" wx:if="{{question != null}}">

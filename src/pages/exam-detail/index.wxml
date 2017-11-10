@@ -2,7 +2,7 @@
 <view class="content" wx:if="{{activity!= null && activity.id !=''  && resource!=null && resource.id != ''}}">
     <view class="section">
         <text class="title">{{activity.title}}</text>
-        <text wx:if="{{showScore}}" class="{{'score '+resourceAttendance.status}}">{{resourceAttendance.finalScore}}</text>
+        <text wx:if="{{showScore}}" class="{{'score '+ resourceAttendance.statusClass}}">{{attendance.finalScore}}</text>
     </view>
     <view class="section">
         <view>

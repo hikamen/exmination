@@ -146,6 +146,8 @@ class PaperRecord {
 
     questionRecords = [];
 
+    statusClass = '';
+
     constructor(data) {
         if (data) {
             this.id = data.id;
@@ -169,8 +171,10 @@ class PaperRecord {
         this.statusText = '评分中';
         if (this.attendanceStatus === 'PASS') {
             this.statusText = '通过';
+            this.statusClass = 'k_green';
         } else if (this.attendanceStatus === 'FAIL') {
             this.statusText = '不合格';
+            this.statusClass = 'k_red';
         }
     }
 }

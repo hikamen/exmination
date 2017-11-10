@@ -10,12 +10,14 @@ class Activity {
     enrollStartDatetime = '';
     enrollEndDatetime = '';
     enrollDatetime = '';
+    enrollmentCount = 0;
     objective = '';
     description = '';
 
     coverUrl = '';
 
     enrollInd = false; //是否允许报名
+    attendance = null; //ActivityAttendance
 
     constructor(data) {
         if (data) {
@@ -25,10 +27,13 @@ class Activity {
             this.enrollEndDatetime = util.formatDatetime(data.enrollEndDatetime);
             this.objective = data.objective;
             this.description = data.description;
+            if (data.enrollmentCount) {
+                this.enrollmentCount = data.enrollmentCount;
+            }
             if (data.extra) {
                 this.enrollInd = data.extra.enrollInd;
             }
-            if(data.cover && data.cover.files && data.cover.files.length>0) {
+            if (data.cover && data.cover.files && data.cover.files.length > 0) {
                 this.coverUrl = http.SERVER_NAME + data.cover.files[0].url;
             }
             this.format();
@@ -127,6 +132,9 @@ export class ActivityAttendance {
     score = -1;
     finalScore = -1;
 
+    statusLabel = '';
+    statusClass = '';
+
     constructor(data) {
         if (data) {
             this.id = data.id;
@@ -140,6 +148,31 @@ export class ActivityAttendance {
             this.totalTime = data.totalTime;
             this.score = data.score;
             this.finalScore = data.finalScore;
+            this.formatStatusLabel();
+        }
+    }
+
+    formatStatusLabel() {
+        switch (this.status) {
+            case 'NOTATTEMPT':
+                this.statusLabel = '未开始';
+                break;
+            case 'PROGRESS':
+                this.statusLabel = '进行中';
+                this.statusClass = 'k_dark_blue';
+                break;
+            case 'INCOMPLETE':
+                this.statusLabel = '未完成';
+                this.statusClass = 'k_red';
+                break;
+            case 'WITHDRAWN':
+                this.statusLabel = '已放弃';
+                this.statusClass = 'k_red';
+                break;
+            case 'COMPLETED':
+                this.statusLabel = '已完成';
+                this.statusClass = 'k_green';
+                break;
         }
     }
 }
@@ -156,6 +189,8 @@ class ResourceAttendance {
     score = -1;
     finalScore = -1;
 
+    statusClass = '';
+
     constructor(data) {
         if (data) {
             this.id = data.id;
@@ -168,6 +203,19 @@ class ResourceAttendance {
             this.totalAttempt = data.totalAttempt;
             this.score = data.score;
             this.finalScore = data.finalScore;
+
+            this.formatStatusClass();
+        }
+    }
+
+    formatStatusClass() {
+        switch (this.status) {
+            case 'FAIL':
+                this.statusClass = 'k_red';
+                break;
+            case 'PASS':
+                this.statusClass = 'k_green';
+                break;
         }
     }
 }

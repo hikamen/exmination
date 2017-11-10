@@ -1,16 +1,16 @@
 const util = require('util');
 const constants = require('constants');
 
-// const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
-const SERVER_NAME = 'https://szsafety.sun-learning.com';
-const EXCLUDE_PAGES = ['pages/login/index', 'pages/register/index'];
+const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
+// const SERVER_NAME = 'https://szsafety.sun-learning.com';
+const EXCLUDE_PAGES = ['pages/login/index', 'pages/register/index']; //包含的页面中的请求不需要登录验证
 
 const CODE_SUCCESS = 1;
 const CODE_ERROR = 0;
 const CODE_TOKEN_EXPIRE = -1;
 
 let token = '';
-let permitted= false;
+let permitted = false;
 
 function doAfterRequestSuccess(res, callback, errCallback) {
     console.log(res);
@@ -54,7 +54,7 @@ function doAfterRequestFail(err, errCallback) {
 
 function get(url, params, callback, errCallback) {
     _initToken();
-    if(permitted) {
+    if (permitted) {
         util.showLoading();
         wx.request({
             url: SERVER_NAME + url,
@@ -77,7 +77,7 @@ function get(url, params, callback, errCallback) {
 
 function post(url, params, callback, errCallback) {
     _initToken();
-    if(permitted) {
+    if (permitted) {
         util.showLoading('处理中...');
         wx.request({
             url: SERVER_NAME + url,
@@ -105,22 +105,19 @@ function _initToken() {
         let value = wx.getStorageSync(constants.TOKEN);
         if (value) {
             token = 'bearer ' + value;
-            permitted =true;
+            permitted = true;
         } else {
             let pages = getCurrentPages();
-            if (pages && pages.length > 0) {
-                let route = pages[0].route;
-                let reLogin = true;
-                for (let exPage of EXCLUDE_PAGES) {
-                    if (route === exPage) {
-                        reLogin = false;
-                        break;
-                    }
+            let route = pages[0].route;
+            permitted = false;
+            for (let exPage of EXCLUDE_PAGES) {
+                if (route === exPage) {
+                    permitted = true;
+                    break;
                 }
-                if (reLogin) {
-                    util.redirectTo('/pages/login/index');
-                }
-                permitted = !reLogin;
+            }
+            if (!permitted) {
+                util.redirectTo('/pages/login/index');
             }
         }
     }

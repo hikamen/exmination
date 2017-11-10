@@ -8,3 +8,7 @@ page,
     padding-bottom: 0;
 }
 
+.weui-media-box__info__meta_extra {
+    float: right;
+    border-left: 0;
+}
