@@ -8,6 +8,8 @@ App({
     },
     onLaunch: function (option) {
         console.log('launch', option);
+        // let scene = decodeURIComponent(options.scene);
+        // console.log('scene', scene);
         this._login();
     },
     onShow: function () {

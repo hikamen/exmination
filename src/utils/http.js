@@ -1,8 +1,8 @@
 const util = require('util');
 const constants = require('constants');
 
-const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
-// const SERVER_NAME = 'https://szsafety.sun-learning.com';
+// const SERVER_NAME = 'http://192.168.2.116:8780/sunlearning';
+const SERVER_NAME = 'https://szsafety.sun-learning.com';
 const EXCLUDE_PAGES = ['pages/login/index', 'pages/register/index']; //包含的页面中的请求不需要登录验证
 
 const CODE_SUCCESS = 1;

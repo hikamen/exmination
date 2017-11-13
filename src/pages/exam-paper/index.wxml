@@ -69,11 +69,23 @@
         <view class="left">
             <button plain="true" bindtap="goPrevious" disabled="{{previousBtnDisabled}}">上一题</button>
         </view>
-        <view class="middle">
+        <view class="middle" bindtap="showDialog">
+            <image src="../../icon/if_grid.png"></image>
             <text><text class="current">{{currentIndex+1}}</text>/{{total}}</text>
         </view>
         <view class="right">
             <button plain="true" bindtap="goNext" disabled="{{nextBtnDisabled}}">下一题</button>
         </view>
+    </view>
+</view>
+<view class="k-dialog {{ showDialog ? 'k-dialog--show' : '' }}">
+    <view class="k-dialog__mask" bindtap="hideDialog" />
+    <view class="k-dialog__container">
+        <scroll-view class="inner-container" scroll-y="true">
+            <block wx:for="{{questionRecords}}" wx:key="id" >
+                <button class="{{item.isAnswered?'answered':''}}" plain="true" size="mini" bindtap="goToQuestion"
+                        data-index="{{index}}" >{{index+1}}</button>
+            </block>
+        </scroll-view>
     </view>
 </view>

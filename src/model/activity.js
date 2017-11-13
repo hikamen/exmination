@@ -119,7 +119,7 @@ class ActivityEnrollment {
 /**
  * 考试活动成绩
  */
-export class ActivityAttendance {
+class ActivityAttendance {
     id = '';
     activityId = '';
     activityEnrollmentId = '';

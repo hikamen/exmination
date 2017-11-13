@@ -8,44 +8,46 @@ const act_model = require('../../model/activity');
 const que_model = require('../../model/question');
 const moment = require('../../libs/moment/we-moment');
 
-Page({
-    data: {
-        activityId: '', //考试活动ID
-        resourceId: '', //资源（试卷）ID
-        activityEnrollmentId: '', //报名ID
-        mode: constants.MODE_ANSWER, //试卷模式
-        timeInMinute: '', //
+let pageData = {
+    activityId: '', //考试活动ID
+    resourceId: '', //资源（试卷）ID
+    activityEnrollmentId: '', //报名ID
+    mode: constants.MODE_ANSWER, //试卷模式
+    timeInMinute: '', //
 
-        learningSessionId: '', //考试历史记录会话ID
-        learningToken: '', //考试token
-        questionList: [], //题目列表
-        questionRecords: [], //题目答题列表
-        question: null, //当前题目
-        questionRecord: null, //当前题目对应的答题数据和评分
-        currentIndex: 0, //当前题目的序号
-        previousBtnDisabled: true,
-        nextBtnDisabled: false,
-        disabled: false, //页面控制选项是否可选;
-        total: 0, //总题目数,
-        show_answer: false, //是否显示标准答案,
-        showSubmitBtn: true, //是否显示提交按钮
-        timeInSecond: 0,
-        showTimer: false,
-        timer: null,
-        remainingTime: '', //页面上显示的倒数时间
-        intervalId: -1, //控制计时器倒数的实例ID,
-        allowPause: false,
-        warningTime: false //控制页面上倒计时的样式，时间快到时红色显示
-    },
+    learningSessionId: '', //考试历史记录会话ID
+    learningToken: '', //考试token
+    questionList: [], //题目列表
+    questionRecords: [], //题目答题列表
+    question: null, //当前题目
+    questionRecord: null, //当前题目对应的答题数据和评分
+    currentIndex: 0, //当前题目的序号
+    previousBtnDisabled: true,
+    nextBtnDisabled: false,
+    disabled: false, //页面控制选项是否可选;
+    total: 0, //总题目数,
+    show_answer: false, //是否显示标准答案,
+    showSubmitBtn: true, //是否显示提交按钮
+    timeInSecond: 0,
+    showTimer: false,
+    timer: null,
+    remainingTime: '', //页面上显示的倒数时间
+    intervalId: -1, //控制计时器倒数的实例ID,
+    allowPause: false,
+    warningTime: false, //控制页面上倒计时的样式，时间快到时红色显示
+    showDialog: false
+};
+Page({
+    data: pageData,
     onLoad: function (option) {
         this.data.activityId = option.activityId;
         this.data.resourceId = option.resourceId;
         this.data.activityEnrollmentId = option.activityEnrollmentId;
         this.data.mode = option.mode;
-        if(option.questionIndex) {
+        if (option.questionIndex) {
             this.data.currentIndex = parseInt(option.questionIndex);
         }
-        if(option.learningSessionId) {
+        if (option.learningSessionId) {
             this.data.learningSessionId = option.learningSessionId;
         }
         let timeInMinute = util.trim(option.time);
@@ -65,12 +67,123 @@ Page({
 
         this._openPaper(this.data.currentIndex);
     },
+    goPrevious: function () {
+        if (this.data.currentIndex > 0) {
+            this._setCurrentQuestion(this.data.currentIndex - 1);
+        }
+    },
+    goNext: function () {
+        if (this.data.currentIndex < this.data.questionList.length - 1) {
+            this._setCurrentQuestion(this.data.currentIndex + 1);
+        }
+    },
+    /**
+     * 处理单选题和判断题输入
+     * @param event
+     */
+    radioChangeHandle: function (event) {
+        let questionRecord = this.data.questionRecords[this.data.currentIndex];
+        if (questionRecord.type === 'S') {
+            questionRecord.optionRecords = [];
+            let optionRecord = new que_model.OptionRecord();
+            optionRecord.optionId = event.detail.value;
+            questionRecord.optionRecords.push(optionRecord);
+        } else {
+            questionRecord.answer = event.detail.value;
+        }
+        questionRecord.isAnswered = true;
+    },
+    /**
+     * 处理多选题和不定项题输入
+     * @param event
+     */
+    checkboxChangeHandle: function (event) {
+        let questionRecord = this.data.questionRecords[this.data.currentIndex];
+        questionRecord.optionRecords = [];
+        if (event.detail.value && event.detail.value.length > 0) {
+            for (let val of event.detail.value) {
+                let optionRecord = new que_model.OptionRecord();
+                optionRecord.optionId = val;
+                questionRecord.optionRecords.push(optionRecord);
+            }
+            questionRecord.isAnswered = true;
+        } else {
+            questionRecord.isAnswered = false;
+        }
+    },
+    /**
+     * 处理填空题输入
+     * @param event
+     */
+    blankInputHandle: function (event) {
+        let questionRecord = this.data.questionRecords[this.data.currentIndex];
+        if (questionRecord.optionRecords.length === 0) {
+            for (let opt of this.data.question.optionList) {
+                let optionRecord = new que_model.OptionRecord();
+                optionRecord.optionId = opt.id;
+                questionRecord.optionRecords.push(optionRecord);
+            }
+        }
+        let index = event.currentTarget.dataset.index;
+        questionRecord.optionRecords[index].answer = event.detail.value;
+
+        let isAnswered = false;
+        for (let optRecord of questionRecord.optionRecords) {
+            if (util.trim(optRecord.answer) !== '') {
+                isAnswered = true;
+                break;
+            }
+        }
+        questionRecord.isAnswered = isAnswered;
+    },
+    /**
+     * 处理问答题输入
+     * @param event
+     */
+    textareaHandle: function (event) {
+        let questionRecord = this.data.questionRecords[this.data.currentIndex];
+        questionRecord.answer = event.detail.value;
+        if (util.trim(questionRecord.answer) !== '') {
+            questionRecord.isAnswered = true;
+        } else {
+            questionRecord.isAnswered = false;
+        }
+    },
+    showDialog: function () {
+        this.setData({
+            questionRecords: this.data.questionRecords,
+            showDialog: true
+        });
+    },
+    hideDialog: function () {
+        this.setData({
+            showDialog:false
+        });
+    },
+    goToQuestion: function (event) {
+        let index = event.currentTarget.dataset.index;
+        this._setCurrentQuestion(index);
+        this.setData({
+            showDialog: false
+        });
+    },
+    submitHandle: function (force) {
+        if (force === true) {
+            util.showAlert('考试时间已经结束，即将自动提交试卷', () => {
+                this._doSubmit();
+            })
+        } else
+            this._checkUserAnswer(() => {
+                this._doSubmit();
+            });
+    },
+
     _isChoiceQuestion: function (type) {
         return type === 'S' || type === 'M' || type === 'C';
     },
 
     _openPaper: function (index) {
-        if(this.data.mode === constants.MODE_ANSWER) {
+        if (this.data.mode === constants.MODE_ANSWER) {
             let params = {
                 activityId: this.data.activityId,
                 activityEnrollmentId: this.data.activityEnrollmentId
@@ -85,11 +198,11 @@ Page({
         }
 
     },
-    _getPaperData:function (index) {
+    _getPaperData: function (index) {
         let params = {
             activityId: this.data.activityId,
             activityEnrollmentId: this.data.activityEnrollmentId,
-            resourceId:  this.data.resourceId,
+            resourceId: this.data.resourceId,
             mode: this.data.mode,
             learningSessionId: this.data.learningSessionId
         };
@@ -104,14 +217,18 @@ Page({
             if (this.data.mode === constants.MODE_POST_ANSWER) {
                 this._getAnswerData(index);
             } else {
+                let questionRecords = [];
                 for (let i = 0; i < this.data.questionList.length; i++) {
                     let que = this.data.questionList[i];
                     let queRecord = new que_model.QuestionRecord();
                     queRecord.questionId = que.id;
                     queRecord.type = que.type;
                     queRecord.index = i;
-                    this.data.questionRecords.push(queRecord);
+                    questionRecords.push(queRecord);
                 }
+                this.setData({
+                    questionRecords: questionRecords
+                });
                 this._setCurrentQuestion(index);
                 util.showAlert('考试即将开始，请不要随意返回或者关闭小程序，以免造成答题数据丢失，祝您考试成功！');
             }
@@ -192,100 +309,13 @@ Page({
                     }
                 }
             }
-            this.data.questionRecords = paperRecord.questionRecords;
+            this.setData({
+                questionRecords: paperRecord.questionRecords
+            });
             this._setCurrentQuestion(index);
         });
     },
-    goPrevious: function () {
-        if (this.data.currentIndex > 0) {
-            this._setCurrentQuestion(this.data.currentIndex - 1);
-        }
-    },
-    goNext: function () {
-        if (this.data.currentIndex < this.data.questionList.length - 1) {
-            this._setCurrentQuestion(this.data.currentIndex + 1);
-        }
-    },
-    /**
-     * 处理单选题和判断题输入
-     * @param event
-     */
-    radioChangeHandle: function (event) {
-        let questionRecord = this.data.questionRecords[this.data.currentIndex];
-        if (questionRecord.type === 'S') {
-            questionRecord.optionRecords = [];
-            let optionRecord = new que_model.OptionRecord();
-            optionRecord.optionId = event.detail.value;
-            questionRecord.optionRecords.push(optionRecord);
-        } else {
-            questionRecord.answer = event.detail.value;
-        }
-        questionRecord.isAnswered = true;
-    },
-    /**
-     * 处理多选题和不定项题输入
-     * @param event
-     */
-    checkboxChangeHandle: function (event) {
-        let questionRecord = this.data.questionRecords[this.data.currentIndex];
-        questionRecord.optionRecords = [];
-        if (event.detail.value && event.detail.value.length > 0) {
-            for (let val of event.detail.value) {
-                let optionRecord = new que_model.OptionRecord();
-                optionRecord.optionId = val;
-                questionRecord.optionRecords.push(optionRecord);
-            }
-            questionRecord.isAnswered = true;
-        } else {
-            questionRecord.isAnswered
-        }
-    },
-    /**
-     * 处理填空题输入
-     * @param event
-     */
-    blankInputHandle: function (event) {
-        let questionRecord = this.data.questionRecords[this.data.currentIndex];
-        if (questionRecord.optionRecords.length === 0) {
-            for (let opt of this.data.question.optionList) {
-                let optionRecord = new que_model.OptionRecord();
-                optionRecord.optionId = opt.id;
-                questionRecord.optionRecords.push(optionRecord);
-            }
-        }
-        let index = event.currentTarget.dataset.index;
-        questionRecord.optionRecords[index].answer = event.detail.value;
 
-        let isAnswered = false;
-        for (let optRecord of questionRecord.optionRecords) {
-            if (util.trim(optRecord.answer) !== '') {
-                isAnswered = true;
-                break;
-            }
-        }
-        questionRecord.isAnswered = isAnswered;
-    },
-    /**
-     * 处理问答题输入
-     * @param event
-     */
-    textareaHandle: function (event) {
-        let questionRecord = this.data.questionRecords[this.data.currentIndex];
-        questionRecord.answer = event.detail.value;
-        if (util.trim(questionRecord.answer) !== '') {
-            questionRecord.isAnswered = true;
-        }
-    },
-    submitHandle: function (force) {
-        if (force === true) {
-            util.showAlert('考试时间已经结束，即将自动提交试卷', () => {
-                this._doSubmit();
-            })
-        } else
-            this._checkUserAnswer(() => {
-                this._doSubmit();
-            });
-    },
     _doSubmit: function () {
         let paperRecord = new que_model.PaperRecord();
         paperRecord.activityEnrollmentId = this.data.activityEnrollmentId;
@@ -333,7 +363,7 @@ Page({
         }
         if (index === this.data.questionList.length - 1) {
             nextBtnDisabled = true;
-            if(this.data.mode === constants.MODE_ANSWER) {
+            if (this.data.mode === constants.MODE_ANSWER) {
                 showSubmitBtn = true;
             }
         }

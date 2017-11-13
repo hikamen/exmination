@@ -92,13 +92,39 @@ textarea {
     width: 28%;
     border-left:  1px solid #f1f1f1;
     border-right:  1px solid #f1f1f1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer .middle .current {
     color: #25dc38;
 }
 
+.footer .middle image {
+    width: 16px;
+    height: 16px;
+    margin-right: 10rpx;
+}
+
 button[plain][disabled] {
     background: #FFFFFF;
 }
+.inner-container {
+    padding: 30rpx 20rpx;
+    height: 400rpx;
+}
 
+.inner-container button{
+    border-radius: 50%;
+    padding: 16rpx;
+    margin-left: 30rpx;
+    font-weight: bold;
+    width: 100rpx;
+    margin-bottom: 30rpx;
+}
+.inner-container button.answered {
+    border: 2px solid #586c94;
+    color: #586c94;
+}
