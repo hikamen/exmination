@@ -67,6 +67,11 @@ Page({
 
         this._openPaper(this.data.currentIndex);
     },
+    onUnload: function () {
+        if (this.data.intervalId) {
+            clearInterval(this.data.intervalId); //停止倒计时
+        }
+    },
     goPrevious: function () {
         if (this.data.currentIndex > 0) {
             this._setCurrentQuestion(this.data.currentIndex - 1);
@@ -157,7 +162,7 @@ Page({
     },
     hideDialog: function () {
         this.setData({
-            showDialog:false
+            showDialog: false
         });
     },
     goToQuestion: function (event) {
@@ -244,7 +249,9 @@ Page({
                     remainingTime: this.data.timer.format('HH:mm:ss')
                 });
                 if (this.data.timeInSecond === 0 || this.data.allowPause) {
-                    clearInterval(this.data.intervalId); //停止倒计时
+                    if (this.data.intervalId) {
+                        clearInterval(this.data.intervalId); //停止倒计时
+                    }
                     if (this.data.timeInSecond === 0) {
                         this.submitHandle(true);
                     }
