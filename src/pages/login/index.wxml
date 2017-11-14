@@ -14,7 +14,7 @@
                     <view class="weui-cell__bd">
                         <input class="weui-input"  name="username" placeholder="请输入手机号" maxlength="11" type="number"
                                confirm-type="next" confirm-hold="true" bindconfirm="nameConfirm" focus="{{focusName}}"
-                               bindblur="nameBlur" bindfocus="nameFocus"/>
+                               bindblur="nameBlur" value=""/>
                     </view>
                     <view class="weui-cell__ft" wx:if="{{nameError}}">
                         <icon type="warn" size="23" color="#E64340"></icon>
@@ -32,7 +32,7 @@
                     </view>
                     <view class="weui-cell__bd">
                         <input class="weui-input" name="password" placeholder="请输入密码" password="true" maxlength="30"
-                               confirm-type="done" bindconfirm="passwordConfirm" bindblur="passwordBlur"/>
+                               confirm-type="done" bindconfirm="passwordConfirm" bindblur="passwordBlur" value=""/>
                     </view>
                     <view class="weui-cell__ft" wx:if="{{passwordError}}">
                         <icon type="warn" size="23" color="#E64340"></icon>

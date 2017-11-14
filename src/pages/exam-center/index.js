@@ -65,6 +65,7 @@ Page({
 
         if ((scene === 1047 || scene === 1048) && path === 'pages/exam-detail/index') {
             util.navigateTo("/pages/exam-detail/index?id=" + activityId);
+            app.globalData.scene = -1;
         }
         this._getExamCenterData();
     },

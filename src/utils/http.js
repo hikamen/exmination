@@ -108,7 +108,7 @@ function _initToken() {
             permitted = true;
         } else {
             let pages = getCurrentPages();
-            let route = pages[0].route;
+            let route = pages[pages.length-1].route;
             permitted = false;
             for (let exPage of EXCLUDE_PAGES) {
                 if (route === exPage) {

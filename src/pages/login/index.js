@@ -50,12 +50,6 @@ Page({
     nameBlur: function (event) {
         this._validUsername(event.detail.value);
     },
-    /*nameFocus: function () {
-        this.setData({
-            focusName: true,
-            focusPassword: false
-        });
-    },*/
     passwordConfirm: function (event) {
         this._validPassword(event.detail.value);
     },
