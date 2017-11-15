@@ -149,4 +149,6 @@ module.exports = {
     URL_FIND_ATTENDANCE_HISTORY: '/api/activity-attendance/find-attendance-history',
     URL_FIND_USER_RANKING: '/api/activity-attendance/find-user-ranking',
     URL_FIND_RANKING_LIST: '/api/activity-attendance/find-ranking-list',
+    URL_TRAINGING_LIST: '/api/activity/training-list',
+    URL_MY_TRAINGING_LIST: '/api/activity/my-training-list',
 };

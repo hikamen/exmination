@@ -22,7 +22,15 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": 0,
+					"name": "扫小程序码进入",
+					"pathName": "pages/exam-detail/index",
+					"query": "scene=9133536341403893760",
+					"scene": "1047"
+				}
+			]
 		}
 	}
 }

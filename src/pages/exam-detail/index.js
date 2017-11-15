@@ -24,13 +24,24 @@ Page({
         showScore: false //是否显示分数
     },
     onLoad: function (option) {
-        this.data.id = option.id;
-        // this.data.id = '375763170083614720';
+        console.log('exam-detail onLoad', option);
+        if (option.scene) {
+            this.data.id = option.scene;
+            if (app.isUserLogin()) {
+                app.clearPath();
+            }
+        } else {
+            this.data.id = option.id;
+        }
+
         this._getRemoteData();
     },
     onShow: function () {
         if (!this.data.first) {
-            wx.startPullDownRefresh();
+            try {
+                wx.startPullDownRefresh();
+            } catch (e) {
+            }
         }
         this.data.first = false;
     },
@@ -77,7 +88,7 @@ Page({
     },
     goToHistory: function () {
         let url = '/pages/exam-history/index?activityId=' + this.data.id + '&resourceId=' + this.data.resource.id
-            + '&enrollmentId=' + this.data.enrollment.id +'&title='+this.data.activity.title;
+            + '&enrollmentId=' + this.data.enrollment.id + '&title=' + this.data.activity.title;
         util.navigateTo(url);
     },
     _getRemoteData() {
@@ -108,7 +119,7 @@ Page({
         });
     },
 
-    _isScoreShow(status){
+    _isScoreShow(status) {
         return status === 'PASS' || status === 'FAIL';
     },
 
